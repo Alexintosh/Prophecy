@@ -1,8 +1,9 @@
 import React from 'react';
-import { Tabbar, Tab, Page, Button } from 'react-onsenui';
+import { Tabbar, Tab, Page, Button, Col, Row } from 'react-onsenui';
 import Toolbar from '../../components/Toolbar';
 import { getAccountsFromWIFKey, doSendAsset, generatePrivateKey, getWIFFromPrivateKey, getBalance, getTransactionHistory } from 'neon-js';
-import TransactionTab from './TransactionTab'
+import TransactionTab from './TransactionTab';
+import {Balance} from '../../components/Balance';
 
 class TabPage extends React.Component {
 
@@ -25,10 +26,7 @@ class TabPage extends React.Component {
   render() {
     return (
       <Page renderToolbar={() => <Toolbar title={this.props.title} />} >
-        {this.props.active
-          ? <p>This is the <strong>{this.props.title}</strong> page.</p>
-          : null}
-        <Button onClick={this.props.switchTab}>Go to the other tab</Button>
+        <Balance />        
       </Page>
     );
   }
@@ -39,7 +37,7 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 1
+      index: 0
     };
     this.renderTabs = this.renderTabs.bind(this);
   }
@@ -48,7 +46,7 @@ export default class extends React.Component {
     console.log('index : ', activeIndex);
     return [
       {
-        content: <TabPage key="0" title='Home' active={activeIndex == 0} />,
+        content: <TabPage key="0" title='Prophecy Wallet' active={activeIndex == 0} />,
         tab: <Tab key='tab_home' label='Home' icon='md-home' />
       },
       {
