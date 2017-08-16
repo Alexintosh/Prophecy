@@ -1,9 +1,27 @@
 import React from 'react';
-
 import { Tabbar, Tab, Page, Button } from 'react-onsenui';
 import Toolbar from '../../components/Toolbar';
+import { getAccountsFromWIFKey, doSendAsset, generatePrivateKey, getWIFFromPrivateKey, getBalance, getTransactionHistory } from 'neon-js';
+import TransactionTab from './TransactionTab'
 
 class TabPage extends React.Component {
+
+  componentDidMount() {
+    // const assetType = 'Gas';
+    // const amount = 0.01;
+    // doSendAsset('TestNet', toAddress, fromWif, assetType, amount)
+    // .then((response) => {
+    //   console.log("RS", response);
+    //   if (response.result === undefined){
+    //     console.log("Transaction failed!");
+    //   } else {
+    //     console.log("Transaction complete! Your balance will automatically update when the blockchain has processed it.")
+    //   }
+    // }).catch((e) => {
+    //   console.log("Transaction failed!");
+    // });
+  }
+
   render() {
     return (
       <Page renderToolbar={() => <Toolbar title={this.props.title} />} >
@@ -21,7 +39,7 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 0
+      index: 1
     };
     this.renderTabs = this.renderTabs.bind(this);
   }
@@ -30,20 +48,12 @@ export default class extends React.Component {
     console.log('index : ', activeIndex);
     return [
       {
-        content: <TabPage key="0" switchTab={() => { this.setState({ index: 1 }); }}
-          title='Home' active={activeIndex == 0} tabbar={tabbar} />,
-        tab: <Tab
-          key='tab_home'
-          onClick={() => console.log('click home')}
-          label='Home'
-          icon='md-home' />
+        content: <TabPage key="0" title='Home' active={activeIndex == 0} />,
+        tab: <Tab key='tab_home' label='Home' icon='md-home' />
       },
       {
-        content: <TabPage key="1"
-          switchTab={() => { this.setState({ index: 0 }); }}
-
-          title='Settings' active={activeIndex == 1} tabbar={tabbar} />,
-        tab: <Tab key='tab_settings' onClick={() => console.log('click setting')} label='Settings' icon='md-settings' />
+        content: <TransactionTab key="1" active={activeIndex == 1}/>,
+        tab:     <Tab key='tab_settings' label='History' icon='md-settings' />
       }
     ];
   }
