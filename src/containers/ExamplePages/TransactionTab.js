@@ -9,7 +9,7 @@ const pkey = 'AchEwoFAMiR2hph3FTKqoHiuBQ3f3qpmqz';
 export default class TransactionTab extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = { 
             transactionHistory: [],
             state: 'initial',
@@ -32,14 +32,16 @@ export default class TransactionTab extends React.Component {
                 }
             });
 
-            console.log("history", transactions);
-
             this.setState({ transactionHistory: transactions });
         });
     }
 
     handleChange(e) {
         this.setState({state: e.state});
+    }
+
+    handleLoad(){
+        
     }
 
     getContent() {

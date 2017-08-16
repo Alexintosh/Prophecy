@@ -3,11 +3,14 @@ import { Tabbar, Tab, Page, Button, Col, Row } from 'react-onsenui';
 import Toolbar from '../../components/Toolbar';
 import { getAccountsFromWIFKey, doSendAsset, generatePrivateKey, getWIFFromPrivateKey, getBalance, getTransactionHistory } from 'neon-js';
 import TransactionTab from './TransactionTab';
-import {Balance} from '../../components/Balance';
+import TransactionList from './TransactionList';
+import { Balance } from '../../components/Balance';
+
+const pkey = 'AchEwoFAMiR2hph3FTKqoHiuBQ3f3qpmqz';
 
 class TabPage extends React.Component {
 
-  componentDidMount() {
+  // componentDidMount() {
     // const assetType = 'Gas';
     // const amount = 0.01;
     // doSendAsset('TestNet', toAddress, fromWif, assetType, amount)
@@ -21,12 +24,40 @@ class TabPage extends React.Component {
     // }).catch((e) => {
     //   console.log("Transaction failed!");
     // });
+  // }
+
+  constructor(props){
+    super(props);
+    this.state = { 
+        transactionHistory: [],
+        state: 'initial',
+    };
+  }
+
+  componentDidMount() {
+    const history = getTransactionHistory('TestNet', pkey).then(b => {
+
+      const transactions = b.map(t => {
+        return {
+          type: t.neo_sent ? "NEO" : "GAS",
+          amount: t.neo_sent ? t.NEO : t.GAS,
+          txid: t.txid,
+          block_index: t.block_index
+        }
+      });
+
+      this.setState({ transactionHistory: transactions });
+    });
   }
 
   render() {
     return (
       <Page renderToolbar={() => <Toolbar title={this.props.title} />} >
-        <Balance />        
+        <Balance />
+        <TransactionList
+            key="tab_history"
+            history={this.state.transactionHistory}
+        />
       </Page>
     );
   }
@@ -50,8 +81,8 @@ export default class extends React.Component {
         tab: <Tab key='tab_home' label='Home' icon='md-home' />
       },
       {
-        content: <TransactionTab key="1" active={activeIndex == 1}/>,
-        tab:     <Tab key='tab_settings' label='History' icon='md-settings' />
+        content: <TransactionTab key="1" active={activeIndex == 1} />,
+        tab: <Tab key='tab_settings' label='History' icon='md-settings' />
       }
     ];
   }
