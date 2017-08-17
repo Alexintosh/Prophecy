@@ -6,8 +6,14 @@ import TransactionTab from './TransactionTab';
 import TransactionList from './TransactionList';
 import { Balance } from '../../components/Balance';
 import BalanceChart from '../../components/BalanceChart';
+import {AccountInfo} from '../../components/AccountInfo';
 
 const pkey = 'AchEwoFAMiR2hph3FTKqoHiuBQ3f3qpmqz';
+const data = [
+  {name: 'june', uv: 4000, pv: 2400, amt: 2400},
+  {name: 'july', uv: 3000, pv: 1398, amt: 2210},
+  {name: 'aug', uv: 2000, pv: 9800, amt: 2290}
+];
 
 class TabPage extends React.Component {
 
@@ -55,8 +61,9 @@ class TabPage extends React.Component {
     return (
       <Page style={{backgroundColor:'#103F7F', color:'#fff'}} renderToolbar={() => <Toolbar title={this.props.title} />} >
         <div style={{backgroundColor:'#103F7F', color:'#fff'}}>
+        <AccountInfo />
         <Balance />
-        <BalanceChart />
+        <BalanceChart data={data} />
         <TransactionList
           key="tab_history"
           history={this.state.transactionHistory}
@@ -99,7 +106,6 @@ export default class extends React.Component {
           index={this.state.index}
           onPreChange={(event) => {
             this.setState({ index: event.index });
-            console.log('preChange', event.index);
           }}
           onPostChange={() => console.log('postChange')}
           onReactive={() => console.log('postChange')}
