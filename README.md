@@ -1,4 +1,4 @@
-<img src="https://github.com/Alexintosh/Ockham/blob/master/logo.jpg?raw=true" alt="Ockham logo">
+<img src="https://github.com/Alexintosh/Prophecy/blob/master/logo.jpg?raw=true" alt="Ockham logo">
 
 <div align="center"><strong>⚡ Prophecy</strong></div>
 <br />
