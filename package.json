@@ -1,197 +1,49 @@
 {
-  "name": "ionic2-boilerplate",
-  "version": "0.26.2",
-  "description": "An Ionic Starter kit featuring Ionic, Karma, Protractor, Jasmine, CI, and much more",
-  "keywords": [
-    "ionic2",
-    "angular2",
-    "roolup",
-    "webpack",
-    "yarn",
-    "typescript",
-    "karma",
-    "protractor",
-    "istanbul",
-    "gitlab CI"
-  ],
-  "author": "Marco Turi <marco.turi@hotmail.it>",
-  "homepage": "https://github.com/marcoturi/ionic2-boilerplate",
-  "license": "MIT",
+  "name": "ockham",
+  "version": "0.0.1",
+  "description": "An open-source mobile app development framework based on react",
+  "main": "src/app.js",
   "scripts": {
-    "dev": "bnr dev",
-    "build": "bnr build",
-    "build-dev": "bnr build-dev",
-    "test": "bnr test",
-    "test:watch": "bnr test-watch",
-    "e2e": "node config/protractor.server.js",
-    "e2e:interactive": "node config/protractor.server.js --elementExplorer",
-    "ionic:serve": "ionic-app-scripts serve",
-    "ionic:build": "ionic-app-scripts build",
-    "ios:dev": "bnr ios:dev",
-    "ios:release": "bnr ios:release",
-    "ios:release:ci": "bnr ios:release:ci",
-    "android:dev": "bnr android:dev",
-    "android:release": "bnr android:release",
-    "cz": "git-cz",
-    "docs": "typedoc --options typedoc.json --exclude '**/*+(e2e|spec|index).ts' ./src/",
-    "release": "standard-version --no-verify",
-    "push": "git push --follow-tags origin master",
-    "lint": "tslint \"src/**/*.ts\" --type-check --project ./tsconfig.json",
-    "scss-lint": "scss-lint",
-    "outdated": "npm outdated --depth 0",
-    "post-install": "webdriver-manager update --standalone",
-    "precommit": "npm run lint && npm run scss-lint",
-    "prepush": "npm test",
-    "commitmsg": "validate-commit-msg"
-  },
-  "betterScripts": {
-    "dev": {
-      "command": "ionic-app-scripts serve",
-      "env": {
-        "NODE_ENV": "development",
-        "PLATFORM": "web"
-      }
-    },
-    "build": {
-      "command": "ionic-app-scripts build --prod --tsconfig ./tsconfig.build.json",
-      "env": {
-        "NODE_ENV": "production"
-      }
-    },
-    "build-dev": {
-      "command": "ionic-app-scripts build --dev",
-      "env": {
-        "NODE_ENV": "development"
-      }
-    },
-    "test": {
-      "command": "karma start",
-      "env": {
-        "NODE_ENV": "test"
-      }
-    },
-    "test-watch": {
-      "command": "karma start --auto-watch --no-single-run",
-      "env": {
-        "NODE_ENV": "test",
-        "NO_COVERAGE": true
-      }
-    },
-    "ios:dev": {
-      "command": "ionic cordova run ios --livereload",
-      "env": {
-        "NODE_ENV": "development",
-        "PLATFORM": "ios"
-      }
-    },
-    "ios:release": {
-      "command": "ionic cordova build ios --prod --release",
-      "env": {
-        "NODE_ENV": "production",
-        "PLATFORM": "ios"
-      }
-    },
-    "ios:release:ci": {
-      "command": "npm run build",
-      "env": {
-        "NODE_ENV": "production",
-        "PLATFORM": "ios"
-      }
-    },
-    "android:dev": {
-      "command": "ionic cordova run android --livereload",
-      "env": {
-        "NODE_ENV": "development",
-        "PLATFORM": "android"
-      }
-    },
-    "android:release": {
-      "command": "ionic cordova build android --prod --release",
-      "env": {
-        "NODE_ENV": "production",
-        "PLATFORM": "android"
-      }
-    }
-  },
-  "dependencies": {
-    "@angular/common": "4.1.3",
-    "@angular/compiler": "4.1.3",
-    "@angular/compiler-cli": "4.1.3",
-    "@angular/core": "4.1.3",
-    "@angular/forms": "4.1.3",
-    "@angular/http": "4.1.3",
-    "@angular/platform-browser": "4.1.3",
-    "@angular/platform-browser-dynamic": "4.1.3",
-    "@angular/tsc-wrapped": "4.1.3",
-    "@ionic-native/core": "4.1.0",
-    "@ionic-native/splash-screen": "4.1.0",
-    "@ionic/storage": "2.0.1",
-    "ionic-angular": "3.6.0",
-    "ionicons": "3.0.0",
-    "lodash-es": "^4.17.4",
-    "rxjs": "5.4.0",
-    "sw-toolbox": "3.4.0",
-    "zone.js": "0.8.12"
-  },
-  "devDependencies": {
-      "@angular/language-service": "4.2.6",
-      "@ionic/app-scripts": "2.1.3",
-      "@ionic/cli-plugin-cordova": "1.5.0",
-      "@ionic/cli-plugin-ionic-angular": "1.4.0",
-      "@types/debug": "ts2.3",
-      "@types/jasmine": "ts2.3",
-      "@types/lodash-es": "ts2.3",
-      "@types/node": "ts2.3",
-      "angular2-template-loader": "^0.6.2",
-      "awesome-typescript-loader": "^3.2.2",
-      "better-npm-run": "0.1.0",
-      "codelyzer": "3.1.2",
-      "commitizen": "^2.9.6",
-      "copy": "^0.3.0",
-      "cz-conventional-changelog": "^2.0.0",
-      "finalhandler": "^1.0.3",
-      "husky": "^0.14.3",
-      "istanbul-instrumenter-loader": "3.0.0",
-      "jasmine-core": "^2.7.0",
-      "jasmine-spec-reporter": "^4.1.1",
-      "karma": "^1.7.0",
-      "karma-chrome-launcher": "^2.2.0",
-      "karma-coverage": "^1.1.1",
-      "karma-jasmine": "^1.1.0",
-      "karma-mocha-reporter": "^2.2.3",
-      "karma-remap-coverage": "0.1.4",
-      "karma-sourcemap-loader": "^0.3.7",
-      "karma-webpack": "2.0.4",
-      "protractor": "^5.1.2",
-      "protractor-jasmine2-screenshot-reporter": "^0.4.0",
-      "raw-loader": "0.5.1",
-      "serve-static": "^1.12.3",
-      "source-map-loader": "^0.2.1",
-      "standard-version": "^4.2.0",
-      "ts-helpers": "^1.1.1",
-      "ts-node": "^3.3.0",
-      "tslint": "5.5.0",
-      "typedoc": "^0.8.0",
-      "typescript": "~2.3.4",
-      "validate-commit-msg": "^2.14.0",
-      "webpack": "^3.4.1",
-      "xml2js": "^0.4.17"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    },
-    "ionic_webpack": "./config/webpack.config.js"
+    "test": "jest",
+    "start": "webpack-dev-server --open",
+    "build": "webpack && cordova build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/marcoturi/ionic2-boilerplate"
+    "url": "git+https://github.com/Alexintosh/Ockham.git"
   },
+  "keywords": [
+    "cordova",
+    "react",
+    "mobile"
+  ],
+  "author": "Alessio Delmonti",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/marcoturi/ionic2-boilerplate/issues"
+    "url": "https://github.com/Alexintosh/Ockham/issues"
   },
-  "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3"
+  "homepage": "https://github.com/Alexintosh/Ockham#readme",
+  "dependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.6.0",
+    "clean-webpack-plugin": "^0.1.16",
+    "css-loader": "^0.28.4",
+    "html-webpack-plugin": "^2.30.1",
+    "neon-js": "https://github.com/Alexintosh/neon-js",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "recharts": "^1.0.0-alpha.3",
+    "style-loader": "^0.18.2",
+    "styled-components": "^2.1.2",
+    "webpack": "^3.5.4",
+    "webpack-dev-server": "^2.7.1"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "file-loader": "^0.11.2",
+    "onsenui": "^2.5.2",
+    "react-onsenui": "^1.5.0"
   }
 }
