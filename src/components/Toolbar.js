@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Toolbar, BackButton } from 'react-onsenui'
 
-export default class extends React.Component {
+class AppToolbar extends React.Component {
   backButton () {
     return (
       <div className='left'>
@@ -25,3 +25,5 @@ export default class extends React.Component {
     )
   }
 }
+
+export default AppToolbar

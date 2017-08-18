@@ -19,6 +19,9 @@
     "url": "git+https://github.com/Alexintosh/Ockham.git"
   },
   "keywords": [
+    "neo-blockchain",
+    "neo",
+    "ockham",
     "cordova",
     "react",
     "mobile"

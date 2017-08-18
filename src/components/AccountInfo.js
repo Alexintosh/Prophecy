@@ -20,7 +20,6 @@ const Wrapper = styled.div`
 
 export class AccountInfo extends React.Component {
   render () {
-    console.log('Hey')
     return (
       <Wrapper>
         <Label>Your public key:</Label>

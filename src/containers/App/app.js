@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigator } from 'react-onsenui'
-import TabPage from '../ExamplePages/TabPage'
+import Login from '../Login/Login'
 
 export class App extends React.Component {
   renderPage (route, navigator) {
@@ -19,7 +19,7 @@ export class App extends React.Component {
         onPrePop={e => console.log('prepop', e)}
         onPostPop={e => console.log('postpop', e)}
         initialRoute={{
-          component: TabPage,
+          component: Login,
           props: {
             key: 'examples'
           }

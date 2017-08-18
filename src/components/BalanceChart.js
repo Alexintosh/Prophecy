@@ -1,7 +1,7 @@
 import React from 'react'
 import {AreaChart, Line, XAxis, Area, YAxis, Tooltip} from 'Recharts'
 
-export default class BalanceChart extends React.Component {
+export class BalanceChart extends React.Component {
   render () {
     return (
       <AreaChart
@@ -19,3 +19,5 @@ export default class BalanceChart extends React.Component {
     )
   }
 }
+
+export default BalanceChart
