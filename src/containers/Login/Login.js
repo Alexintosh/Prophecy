@@ -5,18 +5,13 @@ import Toolbar from '../../components/Toolbar'
 import Loading from '../../components/Loading'
 import { CenteredCol } from '../../components/Balance'
 import TabPage from '../Wallet/TabPage'
-import { getAccountsFromWIFKey } from 'neon-js'
+import {login, hideError} from './actions'
 
 class LoginPage extends React.Component {
   constructor (props) {
     super(props)
-
-    console.log(props)
-
     this.state = {
-      wif: '',
-      alertDialogShown: false,
-      isLoading: false
+      wif: ''
     }
 
     this.hideAlertDialog = this.hideAlertDialog.bind(this)
@@ -26,36 +21,31 @@ class LoginPage extends React.Component {
     this.setState({ wif: e.target.value })
   }
 
-  signin () {
-    console.log('Loading...')
-    this.setState({isLoading: true})
-
-    let loadAccount
-    try {
-      loadAccount = getAccountsFromWIFKey(this.state.wif)[0]
-      console.log(loadAccount)
-    } catch (e) {
-      loadAccount = -1
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.account.account) {
+      this.props.navigator.pushPage({
+        component: TabPage
+      })
     }
+  }
 
-    setTimeout(() => {
-      this.setState({isLoading: false})
-      if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined) {
-        this.setState({alertDialogShown: true})
-      } else {
-        this.props.navigator.pushPage({
-          component: TabPage
-        })
-      }
-    }, 1000)
+  signin () {
+    console.log('Loading...', this.state.wif)
+    this.props.dispatch(login(this.state.wif))
+
+    // this.props.navigator.pushPage({
+    //   component: TabPage
+    // })
   }
 
   hideAlertDialog () {
-    this.setState({alertDialogShown: false})
+    this.props.dispatch(hideError())
   }
 
   render () {
     const { wif } = this.state
+    const {alertDialogShown} = this.props.account
+
     return (
       <Page renderToolbar={() => <Toolbar title='Prophecy' />}>
         <Row>
@@ -80,7 +70,7 @@ class LoginPage extends React.Component {
         </Row>
 
         <AlertDialog
-          isOpen={this.state.alertDialogShown}
+          isOpen={alertDialogShown}
           isCancelable={false}>
           <div className='alert-dialog-title'>Warning!</div>
           <div className='alert-dialog-content'>

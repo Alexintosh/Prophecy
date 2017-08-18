@@ -1,14 +1,14 @@
-import { LOGGED_IN, LOGGED_OUT } from './constants'
+import { LOGIN_REQ, LOGIN_HIDE_ERROR } from './constants'
 
 export function login (wif) {
   return {
-    type: LOGGED_IN,
-    wif: wif
+    type: LOGIN_REQ,
+    wif
   }
 }
 
-export function logout () {
+export function hideError () {
   return {
-    type: LOGGED_OUT
+    type: LOGIN_HIDE_ERROR
   }
 }
