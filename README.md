@@ -1,9 +1,11 @@
 <img src="https://github.com/Alexintosh/Ockham/blob/master/logo.jpg?raw=true" alt="Ockham logo">
 
-<div align="center"><strong>Ockham</strong></div>
+<div align="center"><strong>⚡ Prophecy</strong></div>
 <br />
 
-<b>Prophecy</b> is the first open-source mobile wallet for the NEO blockchain.
+🔥 The first open-source mobile wallet for the NEO blockchain 🔥 🏦.
+
+📱 Crossplatform both <b>iOs</b> and <b>Android</b> are supported!
 
 <b>Prophecy</b> is based on Ockham a mobile app framework based on [React](https://facebook.github.io/react/), [Cordova](https://cordova.apache.org/) and Onsenui component library.
 
@@ -26,6 +28,7 @@
 * JavaScript Standard Style
 * Test and Linting check before commit (husky)
 * nvm support
+* Styled Components
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
