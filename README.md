@@ -3,34 +3,37 @@
 <div align="center"><strong>Ockham</strong></div>
 <br />
 
-<b>Ockham</b> is the open-source mobile app development framework that makes it easy to build top quality native and progressive web apps with web technologies.
+<b>Prophecy</b> is the first open-source mobile wallet for the NEO blockchain.
 
-<b>Ockham</b> is based on [React](https://facebook.github.io/react/), [Cordova](https://cordova.apache.org/) and Onsenui component library.
+<b>Prophecy</b> is based on Ockham a mobile app framework based on [React](https://facebook.github.io/react/), [Cordova](https://cordova.apache.org/) and Onsenui component library.
 
 
 ## <a name="features"></a>Features
 
+- [X] Transaction History
+- [X] Charts
+- [ ] Create New Wallet
+- [ ] Send NEO
+- [ ] Send GAS
+- [ ] Claim Gas
+- [ ] QRcode
+- [ ] Fingerprint
+
+#### Dev Features
 * Webpack setup including dev server and build process
 * ES6 support with babel
-* Boilerplate Tabbed interface
 * <a href="https://facebook.github.io/jest/docs/">Jest testing suite</a>
 * JavaScript Standard Style
 * Test and Linting check before commit (husky)
+* nvm support
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
-
-## TODO
-- [ ] nvm support
-- [ ] Redux
-- [ ] Tests
-- [ ] JavaScript Style Guide
-- [ ] Example pages
 
 
 ## <a name="start"></a> Quick Start
 
-1. Clone this repo using `git clone https://github.com/Alexintosh/Ockham`
-2. Move to the appropriate directory: `cd Ockham`.<br />
+1. Clone this repo using `git clone https://github.com/Alexintosh/Prophecy`
+2. Move to the appropriate directory: `cd Prophecy`.<br />
 3. Run `yarn install` in order to install dependencies and clean the git repo.<br />
    *At this point you can run `yarn start` to see the example app at `http://localhost:8080/`.*
 
@@ -54,16 +57,20 @@ You can change the port on which the HTTP server listens and more dev server rel
 ### Directory Tree
 
 ```
-|____src
-| |____app.js
-| |____components
-| | |____Toolbar.js
-| |____containers
-| | |____App
-| | | |____app.js
-| | |____ExamplePages
-| | | |____TabPage.js
-| |____index.html
+|____app.js
+|____components
+| |____AccountInfo.js
+| |____Balance.js
+| |____BalanceChart.js
+| |____Toolbar.js
+|____containers
+| |____App
+| | |____app.js
+| |____ExamplePages
+| | |____TabPage.js
+| | |____TransactionList.js
+| | |____TransactionTab.js
+|____index.html
 |____www
 |____hooks
 |____platforms
