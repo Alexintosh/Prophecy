@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Page, Button, Input, Row, AlertDialog } from 'react-onsenui'
 import Toolbar from '../../components/Toolbar'
 import Loading from '../../components/Loading'
@@ -6,9 +7,11 @@ import { CenteredCol } from '../../components/Balance'
 import TabPage from '../Wallet/TabPage'
 import { getAccountsFromWIFKey } from 'neon-js'
 
-export default class LoginPage extends React.Component {
+class LoginPage extends React.Component {
   constructor (props) {
     super(props)
+
+    console.log(props)
 
     this.state = {
       wif: '',
@@ -95,3 +98,9 @@ export default class LoginPage extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  account: state.account
+})
+
+export default connect(mapStateToProps)(LoginPage)
