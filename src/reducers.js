@@ -5,11 +5,13 @@
 
 import {combineReducers} from 'redux'
 import account from './containers/Login/reducer'
+import wallet from './containers/Wallet/reducer'
 /**
  * Creates the main reducer with the asynchronously loaded ones
  */
 export default function createReducer () {
   return combineReducers({
-    account
+    account,
+    wallet
   })
 }

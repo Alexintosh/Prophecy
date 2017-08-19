@@ -3,6 +3,7 @@
  */
 
 import {applyMiddleware, compose, createStore} from 'redux'
+import thunkMiddleware from 'redux-thunk'
 import createReducer from './reducers'
 
 export default function configureStore (initialState = {}, history) {
@@ -10,7 +11,7 @@ export default function configureStore (initialState = {}, history) {
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
   const middlewares = [
-
+    thunkMiddleware
   ]
 
   const enhancers = [

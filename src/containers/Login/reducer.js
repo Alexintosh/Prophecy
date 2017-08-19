@@ -9,13 +9,14 @@ const initialState = {
   isLogged: false,
   account: false,
   isLoading: false,
-  alertDialogShown: false
+  alertDialogShown: false,
+  wif: false
 }
 
 export default function account (state = initialState, action) {
   switch (action.type) {
     case LOGIN_REQ:
-      console.log("ACTION", action)
+      console.log('ACTION', action)
       const account = doLogin(action.wif)
 
       return {
@@ -23,6 +24,7 @@ export default function account (state = initialState, action) {
         account: account,
         isLogged: account,
         alertDialogShown: !account,
+        wif: account ? action.wif : false,
         isLoading: true
       }
 

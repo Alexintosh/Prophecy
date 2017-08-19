@@ -4,7 +4,7 @@ import { Page, Button, Input, Row, AlertDialog } from 'react-onsenui'
 import Toolbar from '../../components/Toolbar'
 import Loading from '../../components/Loading'
 import { CenteredCol } from '../../components/Balance'
-import TabPage from '../Wallet/TabPage'
+import TabContainer from '../Wallet/TabsContainer'
 import {login, hideError} from './actions'
 
 class LoginPage extends React.Component {
@@ -17,25 +17,21 @@ class LoginPage extends React.Component {
     this.hideAlertDialog = this.hideAlertDialog.bind(this)
   }
 
-  wifChanged (e) {
-    this.setState({ wif: e.target.value })
-  }
-
   componentWillReceiveProps (nextProps) {
     if (nextProps.account.account) {
       this.props.navigator.pushPage({
-        component: TabPage
+        component: TabContainer,
+        key: 'Wallet'
       })
     }
   }
 
-  signin () {
-    console.log('Loading...', this.state.wif)
-    this.props.dispatch(login(this.state.wif))
+  wifChanged (e) {
+    this.setState({ wif: e.target.value })
+  }
 
-    // this.props.navigator.pushPage({
-    //   component: TabPage
-    // })
+  signin () {
+    this.props.dispatch(login(this.state.wif))
   }
 
   hideAlertDialog () {

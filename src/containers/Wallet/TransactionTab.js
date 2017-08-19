@@ -1,17 +1,15 @@
 import React from 'react'
 import { PullHook, Page } from 'react-onsenui'
 import Toolbar from '../../components/Toolbar'
-import { getTransactionHistory } from 'neon-js'
-import TransactionList from './TransactionList'
+import TransactionList from '../../components/TransactionList'
+import { fetchTransaction } from './actions'
+import { connect } from 'react-redux'
 
-const pkey = 'AchEwoFAMiR2hph3FTKqoHiuBQ3f3qpmqz'
-
-export default class TransactionTab extends React.Component {
+class TransactionTab extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      transactionHistory: [],
       state: 'initial'
     }
 
@@ -19,18 +17,7 @@ export default class TransactionTab extends React.Component {
   }
 
   componentDidMount () {
-    getTransactionHistory('TestNet', pkey).then(b => {
-      const transactions = b.map(t => {
-        return {
-          type: t.neo_sent ? 'NEO' : 'GAS',
-          amount: t.neo_sent ? t.NEO : t.GAS,
-          txid: t.txid,
-          block_index: t.block_index
-        }
-      })
-
-      this.setState({ transactionHistory: transactions })
-    })
+    this.props.dispatch(fetchTransaction(this.props.public_key))
   }
 
   handleChange (e) {
@@ -38,7 +25,7 @@ export default class TransactionTab extends React.Component {
   }
 
   handleLoad () {
-
+    this.props.dispatch(fetchTransaction(this.props.public_key))
   }
 
   getContent () {
@@ -53,19 +40,27 @@ export default class TransactionTab extends React.Component {
   }
 
   render () {
+    const {transactions} = this.props.wallet
     return (
-      <Page renderToolbar={() => <Toolbar title='History' />} >
+      <Page renderToolbar={() => <Toolbar title='History' />} >      
         <PullHook
           onChange={this.handleChange}
-          onLoad={this.handleLoad}
-                >
+          onLoad={this.handleLoad}>
           {this.getContent()}
         </PullHook>
+        OOOO
         <TransactionList
           key='tab_history'
-          history={this.state.transactionHistory}
+          history={transactions}
                 />
       </Page>
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  wallet: state.wallet,
+  public_key: state.account.account.address
+})
+
+export default connect(mapStateToProps)(TransactionTab)

@@ -19,14 +19,10 @@ export class App extends React.Component {
         <Navigator
           swipeable
           renderPage={this.renderPage}
-          onPrePush={e => console.log('prepush', e)}
-          onPostPush={e => console.log('postpush', e)}
-          onPrePop={e => console.log('prepop', e)}
-          onPostPop={e => console.log('postpop', e)}
           initialRoute={{
             component: Login,
             props: {
-              key: 'examples'
+              key: 'login'
             }
           }}
           />
