@@ -4,6 +4,7 @@ import 'onsenui'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './containers/App/app'
+import './globalStyles'
 
 ReactDOM.render(
   <App />,
