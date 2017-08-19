@@ -5,7 +5,7 @@ import TransactionList from '../../components/TransactionList'
 import { Balance } from '../../components/Balance'
 import BalanceChart from '../../components/BalanceChart'
 import {AccountInfo} from '../../components/AccountInfo'
-import { fetchTransaction } from './actions'
+import { fetchTransaction, fetchBalance } from './actions'
 import { connect } from 'react-redux'
 
 const data = [
@@ -36,10 +36,17 @@ class MainTab extends React.Component {
     this.state = {
       state: 'initial'
     }
+
+    this.refreshBalance = this.refreshBalance.bind(this)
   }
 
   componentDidMount () {
     this.props.dispatch(fetchTransaction(this.props.public_key))
+    this.props.dispatch(fetchBalance(this.props.public_key))
+  }
+
+  refreshBalance () {
+    this.props.dispatch(fetchBalance(this.props.public_key))
   }
 
   render () {
@@ -47,9 +54,15 @@ class MainTab extends React.Component {
     return (
       <Page style={{backgroundColor: '#103F7F', color: '#fff'}} renderToolbar={() => <Toolbar title={this.props.title} />} >
         <div style={{backgroundColor: '#103F7F', color: '#fff'}}>
-          <AccountInfo />
-          <Balance />
+          <AccountInfo publicKey={this.props.public_key} />
+
+          <Balance
+            NEO={this.props.balance.NEO}
+            GAS={this.props.balance.GAS}
+            onRefresh={this.refreshBalance} />
+
           <BalanceChart data={data} />
+
           <TransactionList
             key='tab_history'
             history={transactions}
@@ -63,7 +76,11 @@ class MainTab extends React.Component {
 
 const mapStateToProps = (state) => ({
   wallet: state.wallet,
-  public_key: state.account.account.address
+  public_key: state.account.account.address,
+  balance: {
+    NEO: state.wallet.Neo,
+    GAS: state.wallet.Gas
+  }
 })
 
 export default connect(mapStateToProps)(MainTab)

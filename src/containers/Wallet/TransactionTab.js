@@ -48,7 +48,6 @@ class TransactionTab extends React.Component {
           onLoad={this.handleLoad}>
           {this.getContent()}
         </PullHook>
-        OOOO
         <TransactionList
           key='tab_history'
           history={transactions}

@@ -20,10 +20,12 @@ const Wrapper = styled.div`
 
 export class AccountInfo extends React.Component {
   render () {
+    const {publicKey} = this.props
+
     return (
       <Wrapper>
         <Label>Your public key:</Label>
-        <Address>akdsfgak fasdf7dsf678asd5f5as</Address>
+        <Address>{publicKey}</Address>
       </Wrapper>
     )
   }

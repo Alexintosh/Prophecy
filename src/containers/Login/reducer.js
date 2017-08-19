@@ -16,7 +16,6 @@ const initialState = {
 export default function account (state = initialState, action) {
   switch (action.type) {
     case LOGIN_REQ:
-      console.log('ACTION', action)
       const account = doLogin(action.wif)
 
       return {
@@ -43,7 +42,6 @@ function doLogin (wif) {
   let account
   try {
     account = getAccountsFromWIFKey(wif)[0]
-    console.log(account)
   } catch (e) {
     account = -1
   }

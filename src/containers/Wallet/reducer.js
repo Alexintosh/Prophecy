@@ -1,5 +1,6 @@
 import {
-  SET_TRANSACTION_HISTORY
+  SET_TRANSACTION_HISTORY,
+  SET_BALANCE
 } from './constants'
 
 const initialState = {
@@ -15,6 +16,13 @@ export default function wallet (state = initialState, action) {
       return {
         ...state,
         transactions: action.transactions
+      }
+
+    case SET_BALANCE:
+      return {
+        ...state,
+        Neo: action.Neo,
+        Gas: action.Gas
       }
 
     default:

@@ -38,34 +38,67 @@ export const fiat = styled.div`
     font-weight:200;
 `
 
-export const Balance = () => {
-  return (
-    <Wrapper>
-      <Row>
-        <CenteredCol>
-          <Split>
-            <Label>NEO</Label>
-            <AmountBig>15</AmountBig>
-          </Split>
-        </CenteredCol>
-        <CenteredCol>
-          <Split>
-            <Label>Refresh</Label>
-            <Icon size={30} icon='md-refresh' />
-          </Split>
-        </CenteredCol>
-        <CenteredCol>
-          <Split>
-            <Label>GAS</Label>
-            <AmountBig>1500</AmountBig>
-          </Split>
-        </CenteredCol>
-      </Row>
-      <Row>
-        <CenteredCol>
-          <Button>Claim 0 Gas</Button>
-        </CenteredCol>
-      </Row>
-    </Wrapper>
-  )
+export class Balance extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      isLoading: false,
+      animationStart: false
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const now = Date.now()
+
+    if (now - this.state.animationStart > 1000) {
+      this.setState({ isLoading: false, animationStart: false })
+    } else {
+      const delta = 1000 - (now - this.state.animationStart)
+
+      setTimeout(() => {
+        this.setState({ isLoading: false, animationStart: false })
+      }, delta)
+    }
+  }
+
+  refresh () {
+    this.setState({
+      isLoading: true,
+      animationStart: Date.now()
+    })
+    this.props.onRefresh()
+  }
+
+  render () {
+    const { NEO, GAS } = this.props
+    return (
+      <Wrapper>
+        <Row>
+          <CenteredCol>
+            <Split>
+              <Label>NEO</Label>
+              <AmountBig>{NEO}</AmountBig>
+            </Split>
+          </CenteredCol>
+          <CenteredCol>
+            <Split onClick={this.refresh.bind(this)}>
+              <Label>Refresh</Label>
+              <Icon size={30} icon='md-refresh' spin={this.state.isLoading} />
+            </Split>
+          </CenteredCol>
+          <CenteredCol>
+            <Split>
+              <Label>GAS</Label>
+              <AmountBig>{GAS}</AmountBig>
+            </Split>
+          </CenteredCol>
+        </Row>
+        <Row>
+          <CenteredCol>
+            <Button>Claim 0 Gas</Button>
+          </CenteredCol>
+        </Row>
+      </Wrapper>
+    )
+  }
 }

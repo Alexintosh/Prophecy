@@ -1,12 +1,20 @@
-import { SET_BALANCE, SET_MARKET_PRICE, RESET_PRICE, SET_TRANSACTION_HISTORY } from './constants'
-import { getTransactionHistory } from 'neon-js'
+import {
+  SET_BALANCE,
+  SET_MARKET_PRICE,
+  RESET_PRICE,
+  SET_TRANSACTION_HISTORY
+} from './constants'
 
-export function setBalance (neo, gas, price) {
+import {
+  getTransactionHistory,
+  getBalance
+} from 'neon-js'
+
+export function setBalance (data) {
   return {
     type: SET_BALANCE,
-    Neo: neo,
-    Gas: gas,
-    price: price
+    Neo: data.Neo,
+    Gas: data.Gas
   }
 }
 
@@ -43,4 +51,11 @@ export function fetchTransaction (pkey) {
   }).then((data) => {
     dispatch(setTransactionHistory(data))
   })
+}
+
+export function fetchBalance (pkey) {
+  return (dispatch) => getBalance('TestNet', pkey)
+    .then((data) => {
+      dispatch(setBalance(data))
+    })
 }
