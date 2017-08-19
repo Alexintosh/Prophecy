@@ -1,6 +1,10 @@
 import React from 'react'
 import { Navigator } from 'react-onsenui'
+import { Provider } from 'react-redux'
 import Login from '../Login/Login'
+import configureStore from './../../store'
+
+const store = configureStore()
 
 export class App extends React.Component {
   renderPage (route, navigator) {
@@ -11,20 +15,18 @@ export class App extends React.Component {
 
   render () {
     return (
-      <Navigator
-        swipeable
-        renderPage={this.renderPage}
-        onPrePush={e => console.log('prepush', e)}
-        onPostPush={e => console.log('postpush', e)}
-        onPrePop={e => console.log('prepop', e)}
-        onPostPop={e => console.log('postpop', e)}
-        initialRoute={{
-          component: Login,
-          props: {
-            key: 'examples'
-          }
-        }}
-            />
+      <Provider store={store}>
+        <Navigator
+          swipeable
+          renderPage={this.renderPage}
+          initialRoute={{
+            component: Login,
+            props: {
+              key: 'login'
+            }
+          }}
+          />
+      </Provider>
     )
   }
 }

@@ -1,0 +1,69 @@
+import React from 'react'
+import { Page } from 'react-onsenui'
+import Toolbar from '../../components/Toolbar'
+import TransactionList from '../../components/TransactionList'
+import { Balance } from '../../components/Balance'
+import BalanceChart from '../../components/BalanceChart'
+import {AccountInfo} from '../../components/AccountInfo'
+import { fetchTransaction } from './actions'
+import { connect } from 'react-redux'
+
+const data = [
+  {name: 'june', uv: 4000, pv: 2400, amt: 2400},
+  {name: 'july', uv: 3000, pv: 1398, amt: 2210},
+  {name: 'aug', uv: 2000, pv: 9800, amt: 2290}
+]
+
+class MainTab extends React.Component {
+  // componentDidMount() {
+  // const assetType = 'Gas';
+  // const amount = 0.01;
+  // doSendAsset('TestNet', toAddress, fromWif, assetType, amount)
+  // .then((response) => {
+  //   console.log("RS", response);
+  //   if (response.result === undefined){
+  //     console.log("Transaction failed!");
+  //   } else {
+  //     console.log("Transaction complete! Your balance will automatically update when the blockchain has processed it.")
+  //   }
+  // }).catch((e) => {
+  //   console.log("Transaction failed!");
+  // });
+  // }
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      state: 'initial'
+    }
+  }
+
+  componentDidMount () {
+    this.props.dispatch(fetchTransaction(this.props.public_key))
+  }
+
+  render () {
+    const {transactions} = this.props.wallet
+    return (
+      <Page style={{backgroundColor: '#103F7F', color: '#fff'}} renderToolbar={() => <Toolbar title={this.props.title} />} >
+        <div style={{backgroundColor: '#103F7F', color: '#fff'}}>
+          <AccountInfo />
+          <Balance />
+          <BalanceChart data={data} />
+          <TransactionList
+            key='tab_history'
+            history={transactions}
+        />
+
+        </div>
+      </Page>
+    )
+  }
+}
+
+const mapStateToProps = (state) => ({
+  wallet: state.wallet,
+  public_key: state.account.account.address
+})
+
+export default connect(mapStateToProps)(MainTab)
