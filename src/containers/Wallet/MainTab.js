@@ -62,10 +62,10 @@ class MainTab extends React.Component {
       doClaimAllGas('TestNet', this.props.account.wif).then((response) => {
         console.log('doClaimAllGas')
         if (response.result === true) {
-          console.log("Claim was successful! Your balance will update once the blockchain has processed it.")
+          console.log('Claim was successful! Your balance will update once the blockchain has processed it.')
           setTimeout(() => this.props.dispatch(disableClaim(false)), 300000)
         } else {
-          console.log("Claim failed")
+          console.log('Claim failed')
         }
         setTimeout(() => this.refresh(), 5000)
       })
@@ -73,7 +73,7 @@ class MainTab extends React.Component {
   }
 
   refresh () {
-    console.log("Refresh")
+    console.log('Refresh')
     this.props.dispatch(fetchTransaction(this.props.public_key))
     this.props.dispatch(fetchBalance(this.props.public_key))
     this.props.dispatch(fetchClaimAmount(this.props.public_key))
@@ -82,9 +82,10 @@ class MainTab extends React.Component {
   render () {
     const {transactions} = this.props.wallet
     const doClaim = () => this.props.dispatch(doGasClaim('TestNet', this.props.account.wif, this.props.account.account.address, this.props.balance.NEO))
+    // {backgroundColor: '#103F7F', color: '#fff'}
     return (
-      <Page style={{backgroundColor: '#103F7F', color: '#fff'}} renderToolbar={() => <Toolbar title={this.props.title} />} >
-        <div style={{backgroundColor: '#103F7F', color: '#fff'}}>
+      <Page>
+        <div>
           <AccountInfo publicKey={this.props.public_key} />
 
           <Balance

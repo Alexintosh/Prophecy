@@ -42,7 +42,7 @@ class TransactionTab extends React.Component {
   render () {
     const {transactions} = this.props.wallet
     return (
-      <Page renderToolbar={() => <Toolbar title='History' />} >
+      <Page>
         <PullHook
           onChange={this.handleChange}
           onLoad={this.handleLoad}>

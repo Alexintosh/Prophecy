@@ -95,13 +95,13 @@ export function fetchClaimAmount (pkey) {
 }
 
 export function doGasClaim (net, wif, selfAddress, neo) {
-  console.log("Sending Neo to Yourself...")
+  console.log('Sending Neo to Yourself...')
   return (dispatch) => doSendAsset('TestNet', selfAddress, wif, 'Neo', neo)
   .then((response) => {
     if (response.result === undefined) {
       console.log('Transaction failed!')
     } else {
-      console.log("Waiting for transaction to clear...")
+      console.log('Waiting for transaction to clear...')
       dispatch(setClaimRequest(true))
       dispatch(disableClaim(true))
     }

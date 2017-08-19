@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
 
 export const Split = styled.div`
     display:inline-block;
-    
+    width: 50%;
     text-align: center;
     clear:none;
 `
@@ -80,20 +80,18 @@ export class Balance extends React.Component {
               <AmountBig>{NEO}</AmountBig>
             </Split>
           </CenteredCol>
-        </Row>
-        <Row>
+
           <CenteredCol>
             <Split onClick={this.refresh.bind(this)}>
               <Label>Refresh</Label>
               <Icon size={30} icon='md-refresh' spin={this.state.isLoading} />
             </Split>
           </CenteredCol>
-        </Row>
-        <Row>
+
           <CenteredCol>
             <Split>
               <Label>GAS</Label>
-              <AmountBig>{GAS}</AmountBig>
+              <AmountBig>{GAS < 0.001 ? 0 : GAS.toPrecision(5)}</AmountBig>
             </Split>
           </CenteredCol>
         </Row>

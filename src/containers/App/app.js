@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 import Login from '../Login/Login'
 import configureStore from './../../store'
 
+import MainTab from '../Wallet/MainTab'
+
 const store = configureStore()
 
 export class App extends React.Component {
