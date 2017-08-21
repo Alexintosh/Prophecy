@@ -3,7 +3,7 @@ import { Page } from 'react-onsenui'
 import TransactionList from '../../components/TransactionList'
 import {doClaimAllGas} from 'neon-js'
 import { Balance } from '../../components/Balance'
-import BalanceChart from '../../components/BalanceChart'
+// import BalanceChart from '../../components/BalanceChart'
 import {AccountInfo} from '../../components/AccountInfo'
 import {
   fetchTransaction,
@@ -15,11 +15,11 @@ import {
 } from './actions'
 import { connect } from 'react-redux'
 
-const data = [
-  {name: 'june', uv: 4000, pv: 2400, amt: 2400},
-  {name: 'july', uv: 3000, pv: 1398, amt: 2210},
-  {name: 'aug', uv: 2000, pv: 9800, amt: 2290}
-]
+// const data = [
+//   {name: 'june', uv: 4000, pv: 2400, amt: 2400},
+//   {name: 'july', uv: 3000, pv: 1398, amt: 2210},
+//   {name: 'aug', uv: 2000, pv: 9800, amt: 2290}
+// ]
 
 class MainTab extends React.Component {
   // componentDidMount() {
@@ -79,10 +79,10 @@ class MainTab extends React.Component {
   }
 
   render () {
-    const {transactions} = this.props.wallet
+    const transactions = this.props.wallet.transactions.slice(0, 5)
     const doClaim = () => {
       this.props.dispatch(doGasClaim('TestNet', this.props.account.wif, this.props.account.account.address, this.props.balance.NEO))
-      // setTimeout(() => this.refresh(), 5000)
+      setTimeout(() => this.refresh(), 5000)
     }
 
     return (
@@ -97,7 +97,7 @@ class MainTab extends React.Component {
           onClaim={doClaim}
           onRefresh={this.refresh} />
 
-        <BalanceChart data={data} />
+        { /* <BalanceChart data={data} /> */ }
 
         <TransactionList
           key='tab_history'

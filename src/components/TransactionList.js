@@ -1,5 +1,5 @@
 import React from 'react'
-import { List } from 'react-onsenui'
+import { List, ListHeader } from 'react-onsenui'
 import TransactionItem from './TransactionItem'
 
 class TransactionList extends React.Component {
@@ -14,6 +14,7 @@ class TransactionList extends React.Component {
       <List
         dataSource={this.props.history}
         renderRow={this.renderRow}
+        renderHeader={() => <ListHeader>Last transactions</ListHeader>}
       />
     )
   }

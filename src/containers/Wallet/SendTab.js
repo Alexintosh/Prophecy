@@ -1,5 +1,4 @@
 import React from 'react'
-import { fetchTransaction } from './actions'
 import { Page } from 'react-onsenui'
 import { connect } from 'react-redux'
 
