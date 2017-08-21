@@ -6,6 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack && cordova build",
+    "run-android": "webpack && cordova run android",
+    "resources": "splash-n-icons generate",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "standard --verbose | snazzy",
@@ -46,6 +48,7 @@
     "recharts": "^1.0.0-alpha.3",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "splash-n-icons": "^0.2.2",
     "style-loader": "^0.18.2",
     "styled-components": "^2.1.2",
     "webpack": "^3.5.4",

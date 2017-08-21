@@ -104,6 +104,7 @@ export function doGasClaim (net, wif, selfAddress, neo) {
       console.log('Waiting for transaction to clear...')
       dispatch(setClaimRequest(true))
       dispatch(disableClaim(true))
+      dispatch(fetchClaimAmount(selfAddress))
     }
   })
 }

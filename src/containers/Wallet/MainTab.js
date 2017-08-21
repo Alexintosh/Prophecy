@@ -80,7 +80,11 @@ class MainTab extends React.Component {
 
   render () {
     const {transactions} = this.props.wallet
-    const doClaim = () => this.props.dispatch(doGasClaim('TestNet', this.props.account.wif, this.props.account.account.address, this.props.balance.NEO))
+    const doClaim = () => {
+      this.props.dispatch(doGasClaim('TestNet', this.props.account.wif, this.props.account.account.address, this.props.balance.NEO))
+      // setTimeout(() => this.refresh(), 5000)
+    }
+
     return (
       <Page>
         <AccountInfo publicKey={this.props.public_key} />
