@@ -1,25 +1,11 @@
 import React from 'react'
-import { List, ListItem } from 'react-onsenui'
+import { List, ListHeader } from 'react-onsenui'
+import TransactionItem from './TransactionItem'
 
 class TransactionList extends React.Component {
-  componentDidMount () {
-    this.formatAmout = this.formatAmount.bind(this)
-    this.renderRow = this.renderRow.bind(this)
-  }
-
-  formatAmount (t) {
-    return t.type === 'NEO' ? parseInt(t.amount) : parseFloat(t.amount).toPrecision(5)
-  }
-
   renderRow (row, index) {
-    const amount = this.formatAmount(row)
     return (
-      <ListItem key={index}>
-        <div style={{display: 'block'}}>
-          {amount} {row.type}
-          <p><small>{row.txid.substring(0, 32)}</small></p>
-        </div>
-      </ListItem>
+      <TransactionItem key={index} index={index} row={row} />
     )
   }
 
@@ -28,7 +14,8 @@ class TransactionList extends React.Component {
       <List
         dataSource={this.props.history}
         renderRow={this.renderRow}
-            />
+        renderHeader={() => <ListHeader>Last transactions</ListHeader>}
+      />
     )
   }
 }

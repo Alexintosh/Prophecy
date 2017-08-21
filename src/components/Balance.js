@@ -15,7 +15,6 @@ export const Wrapper = styled.div`
 
 export const Split = styled.div`
     display:inline-block;
-    width:50%;
     text-align: center;
     clear:none;
 `
@@ -70,7 +69,7 @@ export class Balance extends React.Component {
   }
 
   render () {
-    const { NEO, GAS } = this.props
+    const { NEO, GAS, availaleToClaim, onClaim, claimDisabled } = this.props
     return (
       <Wrapper>
         <Row>
@@ -80,22 +79,26 @@ export class Balance extends React.Component {
               <AmountBig>{NEO}</AmountBig>
             </Split>
           </CenteredCol>
+
           <CenteredCol>
             <Split onClick={this.refresh.bind(this)}>
               <Label>Refresh</Label>
               <Icon size={30} icon='md-refresh' spin={this.state.isLoading} />
             </Split>
           </CenteredCol>
+
           <CenteredCol>
             <Split>
               <Label>GAS</Label>
-              <AmountBig>{GAS}</AmountBig>
+              <AmountBig>{GAS < 0.001 ? 0 : GAS.toPrecision(5)}</AmountBig>
             </Split>
           </CenteredCol>
         </Row>
         <Row>
           <CenteredCol>
-            <Button>Claim 0 Gas</Button>
+            { claimDisabled
+              ? 'You can claim Gas once every 5 minutes'
+            : <Button onClick={onClaim}>Claim {availaleToClaim} Gas</Button>}
           </CenteredCol>
         </Row>
       </Wrapper>

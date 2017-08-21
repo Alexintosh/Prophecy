@@ -1,18 +1,25 @@
 import React from 'react'
 import { Page } from 'react-onsenui'
-import Toolbar from '../../components/Toolbar'
 import TransactionList from '../../components/TransactionList'
+import {doClaimAllGas} from 'neon-js'
 import { Balance } from '../../components/Balance'
-import BalanceChart from '../../components/BalanceChart'
+// import BalanceChart from '../../components/BalanceChart'
 import {AccountInfo} from '../../components/AccountInfo'
-import { fetchTransaction, fetchBalance } from './actions'
+import {
+  fetchTransaction,
+  fetchBalance,
+  fetchClaimAmount,
+  setClaimRequest,
+  doGasClaim,
+  disableClaim
+} from './actions'
 import { connect } from 'react-redux'
 
-const data = [
-  {name: 'june', uv: 4000, pv: 2400, amt: 2400},
-  {name: 'july', uv: 3000, pv: 1398, amt: 2210},
-  {name: 'aug', uv: 2000, pv: 9800, amt: 2290}
-]
+// const data = [
+//   {name: 'june', uv: 4000, pv: 2400, amt: 2400},
+//   {name: 'july', uv: 3000, pv: 1398, amt: 2210},
+//   {name: 'aug', uv: 2000, pv: 9800, amt: 2290}
+// ]
 
 class MainTab extends React.Component {
   // componentDidMount() {
@@ -37,46 +44,76 @@ class MainTab extends React.Component {
       state: 'initial'
     }
 
-    this.refreshBalance = this.refreshBalance.bind(this)
+    this.refresh = this.refresh.bind(this)
   }
 
-  componentDidMount () {
+  componentWillMount () {
+    this.refresh()
+  }
+
+  componentDidUpdate () {
+    // if we requested a claim and new claims are available, do claim
+    if (this.props.claim.inProgress === true && this.props.claim.claimWasUpdated === true) {
+      // WE NEED TO HIT REFERESH TO TRIGGER THAT
+      console.log('Now we can do the actual claiming')
+      this.props.dispatch(setClaimRequest(false))
+
+      doClaimAllGas('TestNet', this.props.account.wif).then((response) => {
+        console.log('doClaimAllGas')
+        if (response.result === true) {
+          console.log('Claim was successful! Your balance will update once the blockchain has processed it.')
+          setTimeout(() => this.props.dispatch(disableClaim(false)), 300000)
+        } else {
+          console.log('Claim failed')
+        }
+        setTimeout(() => this.refresh(), 5000)
+      })
+    }
+  }
+
+  refresh () {
+    console.log('Refresh')
     this.props.dispatch(fetchTransaction(this.props.public_key))
     this.props.dispatch(fetchBalance(this.props.public_key))
-  }
-
-  refreshBalance () {
-    this.props.dispatch(fetchBalance(this.props.public_key))
+    this.props.dispatch(fetchClaimAmount(this.props.public_key))
   }
 
   render () {
-    const {transactions} = this.props.wallet
+    const transactions = this.props.wallet.transactions.slice(0, 5)
+    const doClaim = () => {
+      this.props.dispatch(doGasClaim('TestNet', this.props.account.wif, this.props.account.account.address, this.props.balance.NEO))
+      setTimeout(() => this.refresh(), 5000)
+    }
+
     return (
-      <Page style={{backgroundColor: '#103F7F', color: '#fff'}} renderToolbar={() => <Toolbar title={this.props.title} />} >
-        <div style={{backgroundColor: '#103F7F', color: '#fff'}}>
-          <AccountInfo publicKey={this.props.public_key} />
+      <Page>
+        <AccountInfo publicKey={this.props.public_key} />
 
-          <Balance
-            NEO={this.props.balance.NEO}
-            GAS={this.props.balance.GAS}
-            onRefresh={this.refreshBalance} />
+        <Balance
+          NEO={this.props.balance.NEO}
+          GAS={this.props.balance.GAS}
+          availaleToClaim={this.props.wallet.availableToClaim}
+          claimDisabled={this.props.claim.disabled}
+          onClaim={doClaim}
+          onRefresh={this.refresh} />
 
-          <BalanceChart data={data} />
+        { /* <BalanceChart data={data} /> */ }
 
-          <TransactionList
-            key='tab_history'
-            history={transactions}
+        <TransactionList
+          key='tab_history'
+          history={transactions}
         />
 
-        </div>
       </Page>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
+  account: state.account,
   wallet: state.wallet,
   public_key: state.account.account.address,
+  claim: state.wallet.claimMetadata,
   balance: {
     NEO: state.wallet.Neo,
     GAS: state.wallet.Gas

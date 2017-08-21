@@ -2,12 +2,17 @@ import {
   SET_BALANCE,
   SET_MARKET_PRICE,
   RESET_PRICE,
-  SET_TRANSACTION_HISTORY
+  SET_TRANSACTION_HISTORY,
+  SET_CLAIMABLE_AMOUNT,
+  SET_CLAIM_REQUEST,
+  DISABLE_CLAIM
 } from './constants'
 
 import {
   getTransactionHistory,
-  getBalance
+  getClaimAmounts,
+  getBalance,
+  doSendAsset
 } from 'neon-js'
 
 export function setBalance (data) {
@@ -21,9 +26,31 @@ export function setBalance (data) {
 export function setMarketPrice (price) {
   return {
     type: SET_MARKET_PRICE,
-    price: price
+    price
   }
 }
+
+export function setClaimAmount (amount) {
+  return {
+    type: SET_CLAIMABLE_AMOUNT,
+    available: amount.available,
+    unavailable: amount.unavailable
+  }
+}
+
+export function disableClaim (status) {
+  return {
+    type: DISABLE_CLAIM,
+    status
+  }
+};
+
+export function setClaimRequest (status) {
+  return {
+    type: SET_CLAIM_REQUEST,
+    status
+  }
+};
 
 export function resetPrice () {
   return {
@@ -58,4 +85,26 @@ export function fetchBalance (pkey) {
     .then((data) => {
       dispatch(setBalance(data))
     })
+}
+
+export function fetchClaimAmount (pkey) {
+  return (dispatch) => getClaimAmounts('TestNet', pkey)
+    .then((data) => {
+      dispatch(setClaimAmount(data))
+    })
+}
+
+export function doGasClaim (net, wif, selfAddress, neo) {
+  console.log('Sending Neo to Yourself...')
+  return (dispatch) => doSendAsset('TestNet', selfAddress, wif, 'Neo', neo)
+  .then((response) => {
+    if (response.result === undefined) {
+      console.log('Transaction failed!')
+    } else {
+      console.log('Waiting for transaction to clear...')
+      dispatch(setClaimRequest(true))
+      dispatch(disableClaim(true))
+      dispatch(fetchClaimAmount(selfAddress))
+    }
+  })
 }

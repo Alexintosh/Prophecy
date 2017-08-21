@@ -1,6 +1,5 @@
 import React from 'react'
 import { PullHook, Page } from 'react-onsenui'
-import Toolbar from '../../components/Toolbar'
 import TransactionList from '../../components/TransactionList'
 import { fetchTransaction } from './actions'
 import { connect } from 'react-redux'
@@ -10,22 +9,31 @@ class TransactionTab extends React.Component {
     super(props)
 
     this.state = {
-      state: 'initial'
+      state: 'initial',
+      doneCb: false
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleLoad = this.handleLoad.bind(this)
   }
 
   componentDidMount () {
     this.props.dispatch(fetchTransaction(this.props.public_key))
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.wallet.transactions) {
+      this.setState({state: 'initial'}, this.state.doneCb)
+    }
+  }
+
   handleChange (e) {
     this.setState({state: e.state})
   }
 
-  handleLoad () {
+  handleLoad (done) {
     this.props.dispatch(fetchTransaction(this.props.public_key))
+    this.setState({doneCb: done})
   }
 
   getContent () {
@@ -42,7 +50,7 @@ class TransactionTab extends React.Component {
   render () {
     const {transactions} = this.props.wallet
     return (
-      <Page renderToolbar={() => <Toolbar title='History' />} >      
+      <Page>
         <PullHook
           onChange={this.handleChange}
           onLoad={this.handleLoad}>

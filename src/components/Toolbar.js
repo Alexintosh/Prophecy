@@ -18,7 +18,7 @@ class AppToolbar extends React.Component {
   render () {
     const backButton = this.backButton()
     return (
-      <Toolbar modifier={this.props.modifier} >
+      <Toolbar>
         {backButton}
         <div className='center'>{this.props.title}</div>
       </Toolbar>

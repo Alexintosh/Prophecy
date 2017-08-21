@@ -19,6 +19,8 @@ const Wrapper = styled.div`
 `
 
 export class AccountInfo extends React.Component {
+  // TODO
+  // copy on clipboard https://github.com/niconaso/cordova-plugin-clipboard-x
   render () {
     const {publicKey} = this.props
 
