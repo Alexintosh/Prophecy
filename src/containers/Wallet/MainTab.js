@@ -4,14 +4,16 @@ import TransactionList from '../../components/TransactionList'
 import {doClaimAllGas} from 'neon-js'
 import { Balance } from '../../components/Balance'
 // import BalanceChart from '../../components/BalanceChart'
-import {AccountInfo} from '../../components/AccountInfo'
+// import { Separator } from '../../components/Separator'
+import { AccountInfo } from '../../components/AccountInfo'
 import {
   fetchTransaction,
   fetchBalance,
   fetchClaimAmount,
   setClaimRequest,
   doGasClaim,
-  disableClaim
+  disableClaim,
+  fetchMarketPrice
 } from './actions'
 import { connect } from 'react-redux'
 
@@ -76,6 +78,7 @@ class MainTab extends React.Component {
     this.props.dispatch(fetchTransaction(this.props.public_key))
     this.props.dispatch(fetchBalance(this.props.public_key))
     this.props.dispatch(fetchClaimAmount(this.props.public_key))
+    this.props.dispatch(fetchMarketPrice())
   }
 
   render () {
@@ -89,13 +92,18 @@ class MainTab extends React.Component {
       <Page>
         <AccountInfo publicKey={this.props.public_key} />
 
-        <Balance
-          NEO={this.props.balance.NEO}
-          GAS={this.props.balance.GAS}
-          availaleToClaim={this.props.wallet.availableToClaim}
-          claimDisabled={this.props.claim.disabled}
-          onClaim={doClaim}
-          onRefresh={this.refresh} />
+        <div style={{backgroundColor: '#F0ECEB', paddingTop: '10px', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
+          <Balance
+            NEO={this.props.balance.NEO}
+            GAS={this.props.balance.GAS}
+            NEO_PRICE={this.props.marketPrice.neo}
+            GAS_PRICE={this.props.marketPrice.gas}
+            availaleToClaim={this.props.wallet.availableToClaim}
+            claimDisabled={this.props.claim.disabled}
+            onClaim={doClaim}
+            onRefresh={this.refresh} />
+
+        </div>
 
         { /* <BalanceChart data={data} /> */ }
 
@@ -114,6 +122,7 @@ const mapStateToProps = (state) => ({
   wallet: state.wallet,
   public_key: state.account.account.address,
   claim: state.wallet.claimMetadata,
+  marketPrice: state.wallet.price,
   balance: {
     NEO: state.wallet.Neo,
     GAS: state.wallet.Gas

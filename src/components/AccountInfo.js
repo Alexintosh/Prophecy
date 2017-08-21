@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Icon } from 'react-onsenui'
 
 const Label = styled.div`
     font-size:.85em;
@@ -27,7 +28,10 @@ export class AccountInfo extends React.Component {
     return (
       <Wrapper>
         <Label>Your public key:</Label>
-        <Address>{publicKey}</Address>
+        <Address>
+          {publicKey} {'  '}
+          <Icon icon='ion-ios-copy' size={20} />
+        </Address>
       </Wrapper>
     )
   }

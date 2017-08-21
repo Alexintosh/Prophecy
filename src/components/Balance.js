@@ -1,6 +1,7 @@
 import { Col, Row, Icon, Button } from 'react-onsenui'
 import styled from 'styled-components'
 import React from 'react'
+import {coin2FIAT} from '../utils/CryptoCompareApi'
 
 export const CenteredCol = styled(Col)`
     align-items: center;
@@ -19,10 +20,27 @@ export const Split = styled.div`
     clear:none;
 `
 
+export const SingleBalanceContainer = styled.div`
+  display:inline-block;
+  text-align: left;
+  clear:none;
+  margin-left:10px;
+`
+
+export const USD = styled.div`
+  color: #444;
+`
+
 export const Label = styled.div`
     font-weight:200;
     color:$thin-text-color;
     font-size:1.1em;
+`
+
+export const RefreshButton = styled(Button)`
+  border-radius: 100%;
+  padding: 3px 13px 0px 13px;
+  margin-top: 8px;
 `
 
 export const AmountBig = styled.div`
@@ -30,6 +48,12 @@ export const AmountBig = styled.div`
     font-size:2.4em;
     color:$thin-text-color;
     margin:0px 0px 2px 0px;
+`
+export const AmountSmall = styled.div`
+  font-weight:200;
+  font-size:1.2em;
+  color:#444;
+  margin:0px 0px 2px 0px;
 `
 
 export const fiat = styled.div`
@@ -69,7 +93,7 @@ export class Balance extends React.Component {
   }
 
   render () {
-    const { NEO, GAS, availaleToClaim, onClaim, claimDisabled } = this.props
+    const { NEO, GAS, availaleToClaim, onClaim, claimDisabled, NEO_PRICE, GAS_PRICE } = this.props
     return (
       <Wrapper>
         <Row>
@@ -77,13 +101,16 @@ export class Balance extends React.Component {
             <Split>
               <Label>NEO</Label>
               <AmountBig>{NEO}</AmountBig>
+              <AmountSmall>{coin2FIAT(NEO, NEO_PRICE)}</AmountSmall>
             </Split>
           </CenteredCol>
 
           <CenteredCol>
             <Split onClick={this.refresh.bind(this)}>
               <Label>Refresh</Label>
-              <Icon size={30} icon='md-refresh' spin={this.state.isLoading} />
+              <RefreshButton>
+                <Icon size={30} icon='md-refresh' spin={this.state.isLoading} />
+              </RefreshButton>
             </Split>
           </CenteredCol>
 
@@ -91,14 +118,16 @@ export class Balance extends React.Component {
             <Split>
               <Label>GAS</Label>
               <AmountBig>{GAS < 0.001 ? 0 : GAS.toPrecision(5)}</AmountBig>
+              <AmountSmall>{coin2FIAT(GAS, GAS_PRICE)}</AmountSmall>
             </Split>
           </CenteredCol>
         </Row>
         <Row>
           <CenteredCol>
+            <br /><br />
             { claimDisabled
               ? 'You can claim Gas once every 5 minutes'
-            : <Button onClick={onClaim}>Claim {availaleToClaim} Gas</Button>}
+            : <Button modifier='large' onClick={onClaim}>Claim {availaleToClaim} Gas</Button>}
           </CenteredCol>
         </Row>
       </Wrapper>

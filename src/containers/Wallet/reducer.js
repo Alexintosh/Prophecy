@@ -1,6 +1,7 @@
 import {
   SET_TRANSACTION_HISTORY,
   SET_BALANCE,
+  SET_MARKET_PRICE,
   SET_CLAIMABLE_AMOUNT,
   SET_CLAIM_REQUEST,
   DISABLE_CLAIM
@@ -17,7 +18,10 @@ const initialState = {
     claimWasUpdated: false,
     disabled: false
   },
-  price: '--'
+  price: {
+    gas: 0,
+    neo: 0
+  }
 }
 
 export default function wallet (state = initialState, action) {
@@ -67,6 +71,15 @@ export default function wallet (state = initialState, action) {
         claimMetadata: {
           ...state.claimMetadata,
           disabled: action.status
+        }
+      }
+
+    case SET_MARKET_PRICE:
+      return {
+        ...state,
+        price: {
+          neo: action.neo,
+          gas: action.gas
         }
       }
 

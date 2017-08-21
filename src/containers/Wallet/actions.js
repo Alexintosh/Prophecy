@@ -15,6 +15,11 @@ import {
   doSendAsset
 } from 'neon-js'
 
+import {
+  getNEOPrice,
+  getGASPrice
+} from '../../utils/CryptoCompareApi'
+
 export function setBalance (data) {
   return {
     type: SET_BALANCE,
@@ -23,10 +28,11 @@ export function setBalance (data) {
   }
 }
 
-export function setMarketPrice (price) {
+export function setMarketPrice (gasPrice, neoPrice) {
   return {
     type: SET_MARKET_PRICE,
-    price
+    gas: gasPrice,
+    neo: neoPrice
   }
 }
 
@@ -63,7 +69,7 @@ export function setTransactionHistory (transactions) {
     type: SET_TRANSACTION_HISTORY,
     transactions
   }
-};
+}
 
 export function fetchTransaction (pkey) {
   return (dispatch) => getTransactionHistory('TestNet', pkey).then(b => {
@@ -77,6 +83,15 @@ export function fetchTransaction (pkey) {
     })
   }).then((data) => {
     dispatch(setTransactionHistory(data))
+  })
+}
+
+export function fetchMarketPrice (pkey) {
+  return (dispatch) => Promise.all([
+    getGASPrice(),
+    getNEOPrice()
+  ]).then((data) => {
+    dispatch(setMarketPrice(data[0], data[1]))
   })
 }
 
