@@ -1,5 +1,16 @@
 import React from 'react'
-import { List, ListItem } from 'react-onsenui'
+import styled from 'styled-components'
+import { List, ListItem, Icon } from 'react-onsenui'
+
+export const ReceivedIcon = styled(Icon)`
+  font-size: 30px;
+  color: #5abc03;
+`
+
+export const SentIcon = styled(Icon)`
+  font-size: 30px;
+  color: #a02e2e;
+`
 
 class TransactionList extends React.Component {
   componentDidMount () {
@@ -15,7 +26,16 @@ class TransactionList extends React.Component {
     const amount = this.formatAmount(row)
     return (
       <ListItem key={index}>
-        <div style={{display: 'block'}}>
+        <div className='left'>
+          { amount < 0
+            ? <SentIcon icon='ion-arrow-graph-down-right' className='list-item__thumbnail' />
+            : <ReceivedIcon icon='ion-arrow-graph-up-right' className='list-item__thumbnail' />
+          }
+        </div>
+        <div className='center' style={{display: 'block'}}>
+          { amount < 0
+            ? 'Sent ' : 'Received '
+          }
           {amount} {row.type}
           <p><small>{row.txid.substring(0, 32)}</small></p>
         </div>

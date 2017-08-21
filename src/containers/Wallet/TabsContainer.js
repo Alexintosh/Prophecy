@@ -19,15 +19,15 @@ export default class extends React.Component {
   renderTabs (activeIndex, tabbar) {
     return [
       {
-        content: <MainTab key='tab_home_0' title='' active={activeIndex === 0} />,
+        content: <MainTab key='tab_home_0' active={activeIndex === 0} />,
         tab: <Tab key='tab_home' label='Wallet' />
       },
       {
-        content: <TransactionTab key='tab_transfer' active={activeIndex === 1} />,
+        content: <TransactionTab key='tab_transfer_' active={activeIndex === 1} />,
         tab: <Tab key='tab_transfer' label='Transfer' />
       },
       {
-        content: <TransactionTab key='tab_transaction' active={activeIndex === 2} />,
+        content: <TransactionTab key='tab_transaction_' active={activeIndex === 2} />,
         tab: <Tab key='tab_transaction' label='Transaction' />
       }
     ]

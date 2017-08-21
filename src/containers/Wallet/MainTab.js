@@ -1,6 +1,5 @@
 import React from 'react'
 import { Page } from 'react-onsenui'
-import Toolbar from '../../components/Toolbar'
 import TransactionList from '../../components/TransactionList'
 import {doClaimAllGas} from 'neon-js'
 import { Balance } from '../../components/Balance'
@@ -82,28 +81,25 @@ class MainTab extends React.Component {
   render () {
     const {transactions} = this.props.wallet
     const doClaim = () => this.props.dispatch(doGasClaim('TestNet', this.props.account.wif, this.props.account.account.address, this.props.balance.NEO))
-    // {backgroundColor: '#103F7F', color: '#fff'}
     return (
       <Page>
-        <div>
-          <AccountInfo publicKey={this.props.public_key} />
+        <AccountInfo publicKey={this.props.public_key} />
 
-          <Balance
-            NEO={this.props.balance.NEO}
-            GAS={this.props.balance.GAS}
-            availaleToClaim={this.props.wallet.availableToClaim}
-            claimDisabled={this.props.claim.disabled}
-            onClaim={doClaim}
-            onRefresh={this.refresh} />
+        <Balance
+          NEO={this.props.balance.NEO}
+          GAS={this.props.balance.GAS}
+          availaleToClaim={this.props.wallet.availableToClaim}
+          claimDisabled={this.props.claim.disabled}
+          onClaim={doClaim}
+          onRefresh={this.refresh} />
 
-          <BalanceChart data={data} />
+        <BalanceChart data={data} />
 
-          <TransactionList
-            key='tab_history'
-            history={transactions}
+        <TransactionList
+          key='tab_history'
+          history={transactions}
         />
 
-        </div>
       </Page>
     )
   }

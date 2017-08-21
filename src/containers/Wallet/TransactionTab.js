@@ -1,6 +1,5 @@
 import React from 'react'
 import { PullHook, Page } from 'react-onsenui'
-import Toolbar from '../../components/Toolbar'
 import TransactionList from '../../components/TransactionList'
 import { fetchTransaction } from './actions'
 import { connect } from 'react-redux'
