@@ -86,7 +86,8 @@ class LoginPage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  account: state.account
+  account: state.account,
+  public_key: state.account.account.address
 })
 
 export default connect(mapStateToProps)(LoginPage)

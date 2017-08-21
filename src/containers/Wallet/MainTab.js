@@ -47,7 +47,7 @@ class MainTab extends React.Component {
     this.refresh = this.refresh.bind(this)
   }
 
-  componentDidMount () {
+  componentWillMount () {
     this.refresh()
   }
 

@@ -15,7 +15,6 @@ export const Wrapper = styled.div`
 
 export const Split = styled.div`
     display:inline-block;
-    width: 50%;
     text-align: center;
     clear:none;
 `
