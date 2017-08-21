@@ -2,6 +2,7 @@ import React from 'react'
 import { Tabbar, Tab, Page } from 'react-onsenui'
 import TransactionTab from './TransactionTab'
 import MainTab from './MainTab'
+import SendTab from './SendTab'
 import Toolbar from '../../components/Toolbar'
 
 const titles = ['Prophecy Wallet', 'Transfer', 'Transaction']
@@ -23,7 +24,7 @@ export default class extends React.Component {
         tab: <Tab key='tab_home' label='Wallet' />
       },
       {
-        content: <TransactionTab key='tab_transfer_' active={activeIndex === 1} />,
+        content: <SendTab key='tab_transfer_' active={activeIndex === 1} />,
         tab: <Tab key='tab_transfer' label='Transfer' />
       },
       {
@@ -43,8 +44,6 @@ export default class extends React.Component {
               this.setState({index: event.index, toolbarTitle: titles[event.index]})
             }
           }}
-          onPostChange={() => console.log('postChange')}
-          onReactive={() => console.log('postChange')}
           position='top'
           renderTabs={this.renderTabs}
         />
