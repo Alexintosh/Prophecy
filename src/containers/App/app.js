@@ -2,6 +2,7 @@ import React from 'react'
 import { Navigator } from 'react-onsenui'
 import { Provider } from 'react-redux'
 import Login from '../Login/Login'
+// import SendTab from '../Wallet/SendTab'
 import configureStore from './../../store'
 
 const store = configureStore()
