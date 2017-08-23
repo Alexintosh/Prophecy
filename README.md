@@ -1,6 +1,6 @@
 <img src="https://github.com/Alexintosh/Prophecy/blob/master/logo.jpg?raw=true" alt="Ockham logo">
 
-<div align="center"><strong>⚡ Prophecy</strong></div>
+<div align="center"><strong>⚡ Prophecy ⚡</strong></div>
 <br />
 
 🔥 The first open-source mobile wallet for the NEO blockchain 🔥 🏦.
@@ -14,10 +14,10 @@
 
 - [X] Transaction History
 - [X] Charts
+- [X] Claim Gas
 - [ ] Create New Wallet
 - [ ] Send NEO
 - [ ] Send GAS
-- [ ] Claim Gas
 - [ ] QRcode
 - [ ] Fingerprint
 
@@ -28,6 +28,7 @@
 * JavaScript Standard Style
 * Test and Linting check before commit (husky)
 * nvm support
+* Redux
 * Styled Components
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
@@ -51,11 +52,24 @@ You can change the port on which the HTTP server listens and more dev server rel
 
 * `yarn start`: Runs the dev server and opens the project in your standard browser
 * `yarn build`: Builds the whole project and saves the resulting bundles in the `www` directory
+* `yarn run-android`: Builds the whole project and deploy on device or simulator
+* `yarn resources`: Automatically generates splashscreen and icon from `resources`
 * `yarn test`: Run tests using Jest
 * `yarn test:watch`: Run tests using Jest in watch mode
 * `yarn lint`: Run <a href="https://github.com/standard/standard">standard</a> to check JavaScript Standard Style 
 * `yarn lint:fix`: Run <a href="https://github.com/standard/standard">standard</a> to check JavaScript Standard Style and fixes problem automatically
 * `yarn validate`: Runs linting and testing in parallel for maximum efficiency (npm-run-all)
+
+
+## How can I support the developer?
+- Star the GitHub repo :star:
+- Create pull requests, submit bugs, suggest new features or documentation updates :wrench:
+- Follow me on [Twitter](https://twitter.com/alexintosh) :feet:
+- Donate NEO/GAS at `ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM` 🤑
+
+## Can I hire you?
+Yes!  Ping me on [Twitter](https://twitter.com/alexintosh) or get in touch by [mail](mailto:alessio.d@gmail.com)
+I will be happy to work with you!
 
 ### Directory Tree
 
