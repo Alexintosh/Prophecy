@@ -60,6 +60,17 @@ You can change the port on which the HTTP server listens and more dev server rel
 * `yarn lint:fix`: Run <a href="https://github.com/standard/standard">standard</a> to check JavaScript Standard Style and fixes problem automatically
 * `yarn validate`: Runs linting and testing in parallel for maximum efficiency (npm-run-all)
 
+
+## How can I support the developer?
+- Star the GitHub repo :star:
+- Create pull requests, submit bugs, suggest new features or documentation updates :wrench:
+- Follow me on [Twitter](https://twitter.com/alexintosh) :feet:
+- Donate NEO/GAS at `ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM` 🤑
+
+## Can I hire you?
+Yes!  Ping me on [Twitter](https://twitter.com/alexintosh) or get in touch by [mail](mailto:alessio.d@gmail.com)
+I will be happy to work with you!
+
 ### Directory Tree
 
 ```

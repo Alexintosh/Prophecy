@@ -61,7 +61,6 @@ class SendTab extends React.Component {
   }
 
   changeAsset (e) {
-    console.log("e.activeIndex", e.activeIndex)
     if (e.activeIndex === 0 && this.state.amount) {
       const amount = parseInt(this.state.amount)
       console.log(amount)
