@@ -65,7 +65,7 @@ You can change the port on which the HTTP server listens and more dev server rel
 - Star the GitHub repo :star:
 - Create pull requests, submit bugs, suggest new features or documentation updates :wrench:
 - Follow me on [Twitter](https://twitter.com/alexintosh) :feet:
-- Donate NEO/GAS at `ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM` 🤑
+- Donate NEO/GAS at `ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM` 🙏
 
 ## Can I hire you?
 Yes!  Ping me on [Twitter](https://twitter.com/alexintosh) or get in touch by [mail](mailto:alessio.d@gmail.com)
