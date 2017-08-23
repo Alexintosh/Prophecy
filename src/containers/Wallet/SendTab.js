@@ -61,6 +61,16 @@ class SendTab extends React.Component {
   }
 
   changeAsset (e) {
+    console.log("e.activeIndex", e.activeIndex)
+    if (e.activeIndex === 0 && this.state.amount) {
+      const amount = parseInt(this.state.amount)
+      console.log(amount)
+      if (amount <= 0) {
+        this.setState({index: e.activeIndex, amount: 0})
+        return false
+      }
+    }
+
     this.setState({index: e.activeIndex})
   }
 
@@ -75,6 +85,8 @@ class SendTab extends React.Component {
       return false
     } else if (num === '.' && isFractionable && !prev) {
       num = '0.'
+    } else if (num === '.' && isFractionable && prev && this.state.amount.includes('.')) {
+      return false
     }
 
     if (num === 'DEL') {
@@ -112,6 +124,7 @@ class SendTab extends React.Component {
   }
 
   render () {
+    // TODO animation when price changes, number going progressively
     let gasNumber
     let placeholder = <Placeholder>0</Placeholder>
     if (this.state.amount[this.state.amount.length - 1] === '.') {
@@ -131,43 +144,43 @@ class SendTab extends React.Component {
       <Page>
         <Carousel onPostChange={this.changeAsset} index={this.state.index} fullscreen swipeable autoScroll overscrollable style={{marginBottom: '10px', textAlign: 'center', height: '200px', position: 'relative', color: '#fff'}}>
           <CarouselItem key={0} style={{ background: '#f29e2e' }}>
-              <Row>
-                <Screen>
-                  {this.state.amount || <Placeholder>0</Placeholder>} NEO
+            <Row>
+              <Screen>
+                {parseInt(this.state.amount) || <Placeholder>0</Placeholder>} NEO
                 </Screen>
-              </Row>
-              <Row>
-                <Screen>
+            </Row>
+            <Row>
+              <Screen>
                   $ {this.state.amount ? (this.props.price.neo * parseFloat(this.state.amount)).toFixed(2) : 0}
-                </Screen>
-              </Row>
+              </Screen>
+            </Row>
           </CarouselItem>
           <CarouselItem key={1} style={{ background: '#2C9FA3' }}>
-              <Row>
-                <Screen>
-                  {gasNumber}{placeholder} GAS
+            <Row>
+              <Screen>
+                {gasNumber}{placeholder} GAS
                 </Screen>
-              </Row>
-              <Row>
-                <Screen>
+            </Row>
+            <Row>
+              <Screen>
                   $ {this.state.amount ? (this.props.price.gas * parseFloat(this.state.amount)).toFixed(2) : 0}
-                </Screen>
-              </Row>
+              </Screen>
+            </Row>
           </CarouselItem>
           <div style={{
-              textAlign: 'center',
-              fontSize: '20px',
-              position: 'absolute',
-              bottom: '10px',
-              left: '0px',
-              right: '0px'
-            }}>
-              {[1, 2].map((item, index) => (
-                <span key={index} style={{cursor: 'pointer'}}>
-                  {this.state.index === index ? '\u25CF' : '\u25CB'}
-                </span>
+            textAlign: 'center',
+            fontSize: '20px',
+            position: 'absolute',
+            bottom: '10px',
+            left: '0px',
+            right: '0px'
+          }}>
+            {[1, 2].map((item, index) => (
+              <span key={index} style={{cursor: 'pointer'}}>
+                {this.state.index === index ? '\u25CF' : '\u25CB'}
+              </span>
             ))}
-            </div>
+          </div>
         </Carousel>
 
         <Row>
