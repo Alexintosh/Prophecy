@@ -95,23 +95,23 @@ export function fetchMarketPrice (pkey) {
   })
 }
 
-export function fetchBalance (pkey) {
-  return (dispatch) => getBalance('TestNet', pkey)
+export function fetchBalance (pkey, net = 'TestNet') {
+  return (dispatch) => getBalance(net, pkey)
     .then((data) => {
       dispatch(setBalance(data))
     })
 }
 
-export function fetchClaimAmount (pkey) {
-  return (dispatch) => getClaimAmounts('TestNet', pkey)
+export function fetchClaimAmount (pkey, net = 'TestNet') {
+  return (dispatch) => getClaimAmounts(net, pkey)
     .then((data) => {
       dispatch(setClaimAmount(data))
     })
 }
 
-export function doGasClaim (net, wif, selfAddress, neo) {
+export function doGasClaim (net = 'TestNet', wif, selfAddress, neo) {
   console.log('Sending Neo to Yourself...')
-  return (dispatch) => doSendAsset('TestNet', selfAddress, wif, 'Neo', neo)
+  return (dispatch) => doSendAsset(net, selfAddress, wif, 'Neo', neo)
   .then((response) => {
     if (response.result === undefined) {
       console.log('Transaction failed!')

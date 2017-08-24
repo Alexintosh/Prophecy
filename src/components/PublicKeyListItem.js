@@ -25,7 +25,7 @@ export default class PublicKeyListItem extends React.Component {
       <ListItem key={index}>
         <div className='left' style={{display: 'block'}} onClick={() => this.props.onSelect(row)}>
           {row}
-        </div>        
+        </div>
       </ListItem>
     )
   }

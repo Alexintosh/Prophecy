@@ -33,7 +33,6 @@ export default function account (state = initialState, action) {
       }
     case LOGIN_REQ:
       const account = doLogin(action.wif)
-
       cachePkey(account)
 
       return {

@@ -1,11 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Navigator } from 'react-onsenui'
-import { Provider } from 'react-redux'
 import Login from '../Login/Login'
-// import SendTab from '../Wallet/SendTab'
-import configureStore from './../../store'
-
-const store = configureStore()
 
 export class App extends React.Component {
   renderPage (route, navigator) {
@@ -16,18 +12,16 @@ export class App extends React.Component {
 
   render () {
     return (
-      <Provider store={store}>
-        <Navigator
-          swipeable
-          renderPage={this.renderPage.bind(this)}
-          initialRoute={{
-            component: Login,
-            props: {
-              key: 'login'
-            }
-          }}
-          />
-      </Provider>
+      <Navigator
+        swipeable
+        renderPage={this.renderPage.bind(this)}
+        initialRoute={{
+          component: Login,
+          props: {
+            key: 'login'
+          }
+        }}
+        />
     )
   }
 }
@@ -36,4 +30,8 @@ App.propTypes = {
   children: React.PropTypes.node
 }
 
-export default App
+const mapStateToProps = (state) => ({
+  net: state.net
+})
+
+export default connect(mapStateToProps)(App)

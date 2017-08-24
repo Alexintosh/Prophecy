@@ -74,16 +74,17 @@ class MainTab extends React.Component {
   }
 
   refresh () {
-    this.props.dispatch(fetchTransaction(this.props.public_key))
-    this.props.dispatch(fetchBalance(this.props.public_key))
-    this.props.dispatch(fetchClaimAmount(this.props.public_key))
+    const {net} = this.props
+    this.props.dispatch(fetchTransaction(this.props.public_key, net))
+    this.props.dispatch(fetchBalance(this.props.public_key, net))
+    this.props.dispatch(fetchClaimAmount(this.props.public_key, net))
     this.props.dispatch(fetchMarketPrice())
   }
 
   render () {
     const transactions = this.props.wallet.transactions.slice(0, 5)
     const doClaim = () => {
-      this.props.dispatch(doGasClaim('TestNet', this.props.account.wif, this.props.account.account.address, this.props.balance.NEO))
+      this.props.dispatch(doGasClaim(this.props.net, this.props.account.wif, this.props.account.account.address, this.props.balance.NEO))
       setTimeout(() => this.refresh(), 5000)
     }
 
@@ -120,6 +121,7 @@ const mapStateToProps = (state) => ({
   public_key: state.account.account.address,
   claim: state.wallet.claimMetadata,
   marketPrice: state.wallet.price,
+  net: state.app.net,
   balance: {
     NEO: state.wallet.Neo,
     GAS: state.wallet.Gas
