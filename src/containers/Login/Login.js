@@ -5,7 +5,9 @@ import Toolbar from '../../components/Toolbar'
 import Loading from '../../components/Loading'
 import { CenteredCol } from '../../components/Balance'
 import TabContainer from '../Wallet/TabsContainer'
-import {login, hideError} from './actions'
+import {login, hideError, publicLogin, getCachedPKeys} from './actions'
+import {disableClaim} from '../Wallet/actions'
+import PublicKeyList from '../../components/PublicKeyList'
 
 class LoginPage extends React.Component {
   constructor (props) {
@@ -17,11 +19,17 @@ class LoginPage extends React.Component {
     this.hideAlertDialog = this.hideAlertDialog.bind(this)
   }
 
+  componentDidMount () {
+    this.props.dispatch(getCachedPKeys())
+  }
+
   componentWillReceiveProps (nextProps) {
     if (nextProps.account.account) {
       this.props.navigator.pushPage({
         component: TabContainer,
-        key: 'Wallet'
+        props: {
+          key: 'wallet'
+        }
       })
     }
   }
@@ -32,6 +40,11 @@ class LoginPage extends React.Component {
 
   signin () {
     this.props.dispatch(login(this.state.wif))
+  }
+
+  publicSignin (pkey) {
+    this.props.dispatch(publicLogin(pkey))
+    this.props.dispatch(disableClaim(true))
   }
 
   hideAlertDialog () {
@@ -65,6 +78,8 @@ class LoginPage extends React.Component {
           </CenteredCol>
         </Row>
 
+        <PublicKeyList keys={this.props.cached_public_keys} onSelect={(pkey) => this.publicSignin(pkey)} />
+
         <AlertDialog
           isOpen={alertDialogShown}
           isCancelable={false}>
@@ -87,7 +102,8 @@ class LoginPage extends React.Component {
 
 const mapStateToProps = (state) => ({
   account: state.account,
-  public_key: state.account.account.address
+  public_key: state.account.account.address,
+  cached_public_keys: state.account.cached_public_keys
 })
 
 export default connect(mapStateToProps)(LoginPage)

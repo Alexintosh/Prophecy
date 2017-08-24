@@ -1,11 +1,8 @@
 import React from 'react'
-import { Navigator } from 'react-onsenui'
-import { Provider } from 'react-redux'
+import { connect } from 'react-redux'
+import { Navigator, Toast, Button } from 'react-onsenui'
 import Login from '../Login/Login'
-// import SendTab from '../Wallet/SendTab'
-import configureStore from './../../store'
-
-const store = configureStore()
+import {hideToast} from './actions'
 
 export class App extends React.Component {
   renderPage (route, navigator) {
@@ -15,11 +12,13 @@ export class App extends React.Component {
   }
 
   render () {
+    console.log(this.props)
+
     return (
-      <Provider store={store}>
+      <section>
         <Navigator
           swipeable
-          renderPage={this.renderPage}
+          renderPage={this.renderPage.bind(this)}
           initialRoute={{
             component: Login,
             props: {
@@ -27,7 +26,16 @@ export class App extends React.Component {
             }
           }}
           />
-      </Provider>
+
+        <Toast isOpen={this.props.toast.isShown}>
+          <div className='message'>
+            {this.props.toast.message}
+          </div>
+          <Button onClick={() => this.props.dispatch(hideToast())}>
+            Dismiss
+          </Button>
+        </Toast>
+      </section>
     )
   }
 }
@@ -36,4 +44,9 @@ App.propTypes = {
   children: React.PropTypes.node
 }
 
-export default App
+const mapStateToProps = (state) => ({
+  net: state.app.net,
+  toast: state.app.toast
+})
+
+export default connect(mapStateToProps)(App)

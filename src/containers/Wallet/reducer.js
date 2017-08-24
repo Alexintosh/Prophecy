@@ -41,12 +41,10 @@ export default function wallet (state = initialState, action) {
 
     case SET_CLAIMABLE_AMOUNT:
       let claimWasUpdated = false
-      console.log('action', action)
-      console.log('state', state)
       if (action.available > state.availableToClaim && state.claimMetadata.inProgress === true) {
         claimWasUpdated = true
       }
-      console.log('claimWasUpdated', claimWasUpdated)
+
       return {
         ...state,
         availableToClaim: (action.available + action.unavailable) / 100000000,

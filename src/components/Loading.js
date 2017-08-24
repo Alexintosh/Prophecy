@@ -5,8 +5,6 @@ export default class Loading extends React.Component {
   constructor (props) {
     super(props)
 
-    console.log(props)
-
     this.state = {
       isOpen: false
     }
@@ -19,7 +17,6 @@ export default class Loading extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps)
     this.setState({
       isOpen: nextProps.isOpen
     })

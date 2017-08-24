@@ -26,7 +26,7 @@ export class AccountInfo extends React.Component {
     const {publicKey} = this.props
 
     return (
-      <Wrapper>
+      <Wrapper onClick={() => this.props.onClick()}>
         <Label>Your public key:</Label>
         <Address>
           {publicKey} {'  '}

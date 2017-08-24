@@ -71,8 +71,8 @@ export function setTransactionHistory (transactions) {
   }
 }
 
-export function fetchTransaction (pkey) {
-  return (dispatch) => getTransactionHistory('TestNet', pkey).then(b => {
+export function fetchTransaction (pkey, net) {
+  return (dispatch) => getTransactionHistory(net, pkey).then(b => {
     return b.map(t => {
       return {
         type: t.neo_sent ? 'NEO' : 'GAS',
@@ -86,7 +86,7 @@ export function fetchTransaction (pkey) {
   })
 }
 
-export function fetchMarketPrice (pkey) {
+export function fetchMarketPrice () {
   return (dispatch) => Promise.all([
     getGASPrice(),
     getNEOPrice()
@@ -95,28 +95,28 @@ export function fetchMarketPrice (pkey) {
   })
 }
 
-export function fetchBalance (pkey) {
-  return (dispatch) => getBalance('TestNet', pkey)
+export function fetchBalance (pkey, net = 'TestNet') {
+  return (dispatch) => getBalance(net, pkey)
     .then((data) => {
       dispatch(setBalance(data))
     })
 }
 
-export function fetchClaimAmount (pkey) {
-  return (dispatch) => getClaimAmounts('TestNet', pkey)
+export function fetchClaimAmount (pkey, net = 'TestNet') {
+  return (dispatch) => getClaimAmounts(net, pkey)
     .then((data) => {
       dispatch(setClaimAmount(data))
     })
 }
 
-export function doGasClaim (net, wif, selfAddress, neo) {
-  console.log('Sending Neo to Yourself...')
-  return (dispatch) => doSendAsset('TestNet', selfAddress, wif, 'Neo', neo)
+export function doGasClaim (net = 'TestNet', wif, selfAddress, neo) {
+  console.info('Sending Neo to Yourself...')
+  return (dispatch) => doSendAsset(net, selfAddress, wif, 'Neo', neo)
   .then((response) => {
     if (response.result === undefined) {
-      console.log('Transaction failed!')
+      console.info('Transaction failed!')
     } else {
-      console.log('Waiting for transaction to clear...')
+      console.info('Waiting for transaction to clear...')
       dispatch(setClaimRequest(true))
       dispatch(disableClaim(true))
       dispatch(fetchClaimAmount(selfAddress))

@@ -2,6 +2,11 @@ import React from 'react'
 import { Page, Col, Row, Icon, Button, Carousel, CarouselItem, BottomToolbar } from 'react-onsenui'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import startsWith from 'lodash/startsWith'
+import {
+  showToast,
+  hideToast
+} from '../App/actions.js'
 
 export const Num = styled(Col)`
   font-size:2em;
@@ -63,7 +68,6 @@ class SendTab extends React.Component {
   changeAsset (e) {
     if (e.activeIndex === 0 && this.state.amount) {
       const amount = parseInt(this.state.amount)
-      console.log(amount)
       if (amount <= 0) {
         this.setState({index: e.activeIndex, amount: 0})
         return false
@@ -107,6 +111,14 @@ class SendTab extends React.Component {
 
     if (num === 0 && isFractionable && !prev) {
       num = '0.'
+    } else {
+      if (startsWith(`${prev}${num}`, '0.000')) {
+        this.props.dispatch(showToast('Amount too low'))
+        setTimeout(() => {
+          this.props.dispatch(hideToast())
+        }, 2000)
+        return false
+      }
     }
 
     let newSum
@@ -123,7 +135,7 @@ class SendTab extends React.Component {
   }
 
   render () {
-    // TODO animation when price changes, number going progressively
+    // TODO animation when price changes, numbers going progressively
     let gasNumber
     let placeholder = <Placeholder>0</Placeholder>
     if (this.state.amount[this.state.amount.length - 1] === '.') {
@@ -199,9 +211,9 @@ class SendTab extends React.Component {
             <Num onClick={() => this.numberPressed('DEL')}><Icon icon='ion-android-arrow-back' size={20} /></Num>
           </Row>
         </Row>
-        <BottomToolbar>
-          <Button modifier='large' onClick={() => console.log(parseFloat(this.state.amount))}>CONTINUE</Button>
-        </BottomToolbar>
+        <Row>
+          <Button modifier='large' onClick={() => this.props.dispatch(showToast(parseFloat(this.state.amount)))}>CONTINUE</Button>
+        </Row>
       </Page>
     )
   }
