@@ -29,7 +29,9 @@ class LoginPage extends React.Component {
     if (nextProps.account.account) {
       this.props.navigator.pushPage({
         component: TabContainer,
-        key: 'Wallet'
+        props: {
+          key: 'wallet'
+        }
       })
     }
   }
@@ -78,7 +80,7 @@ class LoginPage extends React.Component {
           </CenteredCol>
         </Row>
 
-        <PublicKeyList keys={this.props.cached_public_keys} onSelect={() => this.publicSignin()} />
+        <PublicKeyList keys={this.props.cached_public_keys} onSelect={(pkey) => this.publicSignin(pkey)} />
 
         <AlertDialog
           isOpen={alertDialogShown}

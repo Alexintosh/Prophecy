@@ -19,7 +19,7 @@ export class App extends React.Component {
       <Provider store={store}>
         <Navigator
           swipeable
-          renderPage={this.renderPage}
+          renderPage={this.renderPage.bind(this)}
           initialRoute={{
             component: Login,
             props: {

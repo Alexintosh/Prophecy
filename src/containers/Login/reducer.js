@@ -7,7 +7,8 @@ import {
   LOGIN_HIDE_ERROR,
   LOGIN_PUBLIC,
   STORAGE_PUBLIC_KEYS,
-  FETCH_STORAGE_PUBLIC_KEYS
+  FETCH_STORAGE_PUBLIC_KEYS,
+  LOGGED_OUT
 } from './constants'
 
 const initialState = {
@@ -54,6 +55,12 @@ export default function account (state = initialState, action) {
       return {
         ...state,
         alertDialogShown: false
+      }
+
+    case LOGGED_OUT:
+      return {
+        ...initialState,
+        cached_public_keys: LocalStorage.getObject(STORAGE_PUBLIC_KEYS, [])
       }
 
     default:

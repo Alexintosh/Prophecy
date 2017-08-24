@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Toolbar, BackButton } from 'react-onsenui'
+import { Toolbar, BackButton, ToolbarButton, Icon } from 'react-onsenui'
 
 class AppToolbar extends React.Component {
   backButton () {
@@ -21,6 +21,11 @@ class AppToolbar extends React.Component {
       <Toolbar>
         {backButton}
         <div className='center'>{this.props.title}</div>
+        <div className='right'>
+          <ToolbarButton onClick={this.props.onLogout}>
+            <Icon icon='ion-log-out' />
+          </ToolbarButton>
+        </div>
       </Toolbar>
     )
   }

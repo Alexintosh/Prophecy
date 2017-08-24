@@ -74,7 +74,6 @@ class MainTab extends React.Component {
   }
 
   refresh () {
-    console.log('Refresh', this.props.public_key)
     this.props.dispatch(fetchTransaction(this.props.public_key))
     this.props.dispatch(fetchBalance(this.props.public_key))
     this.props.dispatch(fetchClaimAmount(this.props.public_key))
@@ -89,7 +88,7 @@ class MainTab extends React.Component {
     }
 
     return (
-      <Page>
+      <Page key='MainTab'>
         <AccountInfo publicKey={this.props.public_key} />
 
         <div style={{backgroundColor: '#F0ECEB', paddingTop: '10px', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
@@ -108,10 +107,7 @@ class MainTab extends React.Component {
 
         { /* <BalanceChart data={data} /> */ }
 
-        <TransactionList
-          key='tab_history'
-          history={transactions}
-        />
+        <TransactionList history={transactions} />
 
       </Page>
     )

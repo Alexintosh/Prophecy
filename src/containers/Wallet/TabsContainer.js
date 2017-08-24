@@ -4,10 +4,12 @@ import TransactionTab from './TransactionTab'
 import MainTab from './MainTab'
 import SendTab from './SendTab'
 import Toolbar from '../../components/Toolbar'
+import {doLogout} from '../Login/actions'
+import { connect } from 'react-redux'
 
 const titles = ['Prophecy Wallet', 'Transfer', 'Transaction']
 
-export default class extends React.Component {
+class TabsContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -18,10 +20,11 @@ export default class extends React.Component {
   }
 
   renderTabs (activeIndex, tabbar) {
+    // navigator={this.props.navigator}
     return [
       {
-        content: <MainTab key='tab_home_0' active={activeIndex === 0} />,
-        tab: <Tab key='tab_home' label='Wallet' />
+        content: <MainTab key='tab_main' active={activeIndex === 0} />,
+        tab: <Tab key='tab_main_' label='Wallet' />
       },
       {
         content: <SendTab key='tab_transfer_' active={activeIndex === 1} />,
@@ -36,8 +39,9 @@ export default class extends React.Component {
 
   render () {
     return (
-      <Page renderToolbar={() => <Toolbar title={this.state.toolbarTitle} />}>
+      <Page renderToolbar={() => <Toolbar onLogout={() => this.props.dispatch(doLogout(this.props.navigator))} title={this.state.toolbarTitle} />}>
         <Tabbar
+          initialIndex={0}
           index={this.state.index}
           onPreChange={(event) => {
             if (event.index !== this.state.index) {
@@ -51,3 +55,5 @@ export default class extends React.Component {
     )
   }
 }
+
+export default connect()(TabsContainer)

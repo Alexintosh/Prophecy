@@ -17,15 +17,15 @@ export default class PublicKeyListItem extends React.Component {
   }
 
   render () {
+        // <div className='right'>
+        //   {this.renderIcon()}
+        // </div>
     const {index, row} = this.props
     return (
       <ListItem key={index}>
-        <div className='left' style={{display: 'block'}} onClick={this.props.onSelect}>
+        <div className='left' style={{display: 'block'}} onClick={() => this.props.onSelect(row)}>
           {row}
-        </div>
-        <div className='right'>
-          {this.renderIcon()}
-        </div>
+        </div>        
       </ListItem>
     )
   }
