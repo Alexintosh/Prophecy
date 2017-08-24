@@ -8,7 +8,6 @@ import TabContainer from '../Wallet/TabsContainer'
 import {login, hideError, publicLogin, getCachedPKeys} from './actions'
 import {disableClaim} from '../Wallet/actions'
 import PublicKeyList from '../../components/PublicKeyList'
-import LocalStorage from '../../utils/LocalStorage'
 
 class LoginPage extends React.Component {
   constructor (props) {
@@ -21,7 +20,6 @@ class LoginPage extends React.Component {
   }
 
   componentDidMount () {
-    console.log("LocalStorage.getObject('public_login')", LocalStorage.getObject('public_login'))
     this.props.dispatch(getCachedPKeys())
   }
 

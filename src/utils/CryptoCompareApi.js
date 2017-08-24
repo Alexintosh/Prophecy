@@ -3,7 +3,6 @@ import axios from 'axios'
 // https://min-api.cryptocompare.com/data/histohour?fsym=NEO&tsym=USD&limit=60&aggregate=3&e=CCCAGG
 export const getHistohour = (net) => {
   return axios.get('https://min-api.cryptocompare.com/data/histohour?fsym=NEO&tsym=USD&limit=60&aggregate=3&e=CCCAGG').then((response) => {
-    console.log(response)
     return response.data.node
   })
 }

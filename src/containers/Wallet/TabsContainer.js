@@ -6,6 +6,7 @@ import SendTab from './SendTab'
 import Toolbar from '../../components/Toolbar'
 import {doLogout} from '../Login/actions'
 import { connect } from 'react-redux'
+import {switchNet} from '../App/actions'
 
 const titles = ['Prophecy Wallet', 'Transfer', 'Transaction']
 
@@ -39,7 +40,12 @@ class TabsContainer extends React.Component {
 
   render () {
     return (
-      <Page renderToolbar={() => <Toolbar onLogout={() => this.props.dispatch(doLogout(this.props.navigator))} title={this.state.toolbarTitle} />}>
+      <Page renderToolbar={() => <Toolbar
+        onLogout={() => this.props.dispatch(doLogout(this.props.navigator))}
+        onSwitchNet={() => this.props.dispatch(switchNet(this.props.net))}
+        selectedNet={this.props.net}
+        showContextualMenu={this.props.isLogged}
+        title={this.state.toolbarTitle} />}>
         <Tabbar
           initialIndex={0}
           index={this.state.index}
@@ -56,4 +62,9 @@ class TabsContainer extends React.Component {
   }
 }
 
-export default connect()(TabsContainer)
+const mapStateToProps = (state) => ({
+  net: state.app.net,
+  isLogged: state.account.account.address
+})
+
+export default connect(mapStateToProps)(TabsContainer)

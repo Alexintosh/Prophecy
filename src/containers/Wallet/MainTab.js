@@ -49,36 +49,41 @@ class MainTab extends React.Component {
     this.refresh = this.refresh.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     this.refresh()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.net !== this.props.net) {
+      this.refresh(nextProps.net)
+    }
   }
 
   componentDidUpdate () {
     // if we requested a claim and new claims are available, do claim
     if (this.props.claim.inProgress === true && this.props.claim.claimWasUpdated === true) {
       // WE NEED TO HIT REFERESH TO TRIGGER THAT
-      console.log('Now we can do the actual claiming')
+      console.info('Now we can do the actual claiming')
       this.props.dispatch(setClaimRequest(false))
 
-      doClaimAllGas('TestNet', this.props.account.wif).then((response) => {
-        console.log('doClaimAllGas')
+      doClaimAllGas(this.props.net, this.props.account.wif).then((response) => {
+        console.info('doClaimAllGas')
         if (response.result === true) {
-          console.log('Claim was successful! Your balance will update once the blockchain has processed it.')
+          console.info('Claim was successful! Your balance will update once the blockchain has processed it.')
           setTimeout(() => this.props.dispatch(disableClaim(false)), 300000)
         } else {
-          console.log('Claim failed')
+          console.info('Claim failed')
         }
         setTimeout(() => this.refresh(), 5000)
       })
     }
   }
 
-  refresh () {
-    const {net} = this.props
+  refresh (net = this.props.net) {
+    this.props.dispatch(fetchMarketPrice())
     this.props.dispatch(fetchTransaction(this.props.public_key, net))
     this.props.dispatch(fetchBalance(this.props.public_key, net))
     this.props.dispatch(fetchClaimAmount(this.props.public_key, net))
-    this.props.dispatch(fetchMarketPrice())
   }
 
   render () {

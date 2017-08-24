@@ -15,6 +15,7 @@
 - [X] Transaction History
 - [X] Charts
 - [X] Claim Gas
+- [X] Switch Net
 - [ ] Create New Wallet
 - [ ] Send NEO
 - [ ] Send GAS
