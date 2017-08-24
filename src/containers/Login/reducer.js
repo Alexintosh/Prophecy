@@ -1,9 +1,13 @@
 import { getAccountsFromWIFKey } from 'neon-js'
+import LocalStorage from '../../utils/LocalStorage'
+import uniq from 'lodash/uniq'
 
 import {
   LOGIN_REQ,
   LOGIN_HIDE_ERROR,
-  LOGIN_PUBLIC
+  LOGIN_PUBLIC,
+  STORAGE_PUBLIC_KEYS,
+  FETCH_STORAGE_PUBLIC_KEYS
 } from './constants'
 
 const initialState = {
@@ -11,7 +15,8 @@ const initialState = {
   account: false,
   isLoading: false,
   alertDialogShown: false,
-  wif: false
+  wif: false,
+  cached_public_keys: []
 }
 
 export default function account (state = initialState, action) {
@@ -28,6 +33,8 @@ export default function account (state = initialState, action) {
     case LOGIN_REQ:
       const account = doLogin(action.wif)
 
+      cachePkey(account)
+
       return {
         ...state,
         account: account,
@@ -35,6 +42,12 @@ export default function account (state = initialState, action) {
         alertDialogShown: !account,
         wif: account ? action.wif : false,
         isLoading: true
+      }
+
+    case FETCH_STORAGE_PUBLIC_KEYS:
+      return {
+        ...state,
+        cached_public_keys: LocalStorage.getObject(STORAGE_PUBLIC_KEYS, [])
       }
 
     case LOGIN_HIDE_ERROR:
@@ -45,6 +58,14 @@ export default function account (state = initialState, action) {
 
     default:
       return state
+  }
+}
+
+function cachePkey (account) {
+  if (account) {
+    const pkeys = LocalStorage.getObject(STORAGE_PUBLIC_KEYS, [])
+    pkeys.push(account.address)
+    LocalStorage.setObject(STORAGE_PUBLIC_KEYS, uniq(pkeys))
   }
 }
 
