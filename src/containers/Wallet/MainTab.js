@@ -7,6 +7,10 @@ import { Balance } from '../../components/Balance'
 // import { Separator } from '../../components/Separator'
 import { AccountInfo } from '../../components/AccountInfo'
 import {
+  showToast
+} from '../App/actions.js'
+
+import {
   fetchTransaction,
   fetchBalance,
   fetchClaimAmount,
@@ -47,6 +51,7 @@ class MainTab extends React.Component {
     }
 
     this.refresh = this.refresh.bind(this)
+    this.copyAddress = this.copyAddress.bind(this)
   }
 
   componentDidMount () {
@@ -69,13 +74,29 @@ class MainTab extends React.Component {
       doClaimAllGas(this.props.net, this.props.account.wif).then((response) => {
         console.info('doClaimAllGas')
         if (response.result === true) {
-          console.info('Claim was successful! Your balance will update once the blockchain has processed it.')
+          this.props.dispatch(showToast('Claim was successful!'))
+
           setTimeout(() => this.props.dispatch(disableClaim(false)), 300000)
+          setTimeout(() => this.refresh(), 5000)
         } else {
           console.info('Claim failed')
+          this.props.dispatch(showToast('Claim failed'))
         }
         setTimeout(() => this.refresh(), 5000)
       })
+    }
+  }
+
+  copyAddress () {
+    console.log('Copy')
+    try {
+      window.cordova.plugins.clipboard.copy(this.props.public_key, () => {
+        this.props.dispatch(showToast('Public Key Copied!'))
+      }, () => {
+        this.props.dispatch(showToast('Error while copying'))
+      })
+    } catch (e) {
+      throw new Error(e)
     }
   }
 
@@ -95,7 +116,10 @@ class MainTab extends React.Component {
 
     return (
       <Page key='MainTab'>
-        <AccountInfo publicKey={this.props.public_key} />
+        <AccountInfo
+          publicKey={this.props.public_key}
+          onClick={this.copyAddress}
+           />
 
         <div style={{backgroundColor: '#F0ECEB', paddingTop: '10px', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
           <Balance

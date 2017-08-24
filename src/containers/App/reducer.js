@@ -1,10 +1,16 @@
 import {
   SELECT_NET,
-  SWITCH_NET
+  SWITCH_NET,
+  SHOW_TOAST,
+  HIDE_TOAST
 } from './constants'
 
 const initialState = {
-  net: 'TestNet'
+  net: 'TestNet',
+  toast: {
+    isShown: true,
+    message: 'Accura ai lupi'
+  }
 }
 
 export default function app (state = initialState, action) {
@@ -13,6 +19,24 @@ export default function app (state = initialState, action) {
       return {
         ...state,
         net: action.net
+      }
+
+    case SHOW_TOAST:
+      return {
+        ...state,
+        toast: {
+          message: action.message,
+          isShown: true
+        }
+      }
+
+    case HIDE_TOAST:
+      return {
+        ...state,
+        toast: {
+          ...state.toast,
+          isShown: false
+        }
       }
 
     case SWITCH_NET:
