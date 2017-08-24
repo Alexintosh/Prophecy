@@ -2,6 +2,7 @@ import React from 'react'
 import { Page, Col, Row, Icon, Button, Carousel, CarouselItem, BottomToolbar } from 'react-onsenui'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import startsWith from 'lodash/startsWith'
 
 export const Num = styled(Col)`
   font-size:2em;
@@ -107,6 +108,10 @@ class SendTab extends React.Component {
 
     if (num === 0 && isFractionable && !prev) {
       num = '0.'
+    } else {
+      if (startsWith(`${prev}${num}`, '0.000')) {
+        return false
+      }
     }
 
     let newSum
