@@ -1,9 +1,16 @@
-import { LOGIN_REQ, LOGIN_HIDE_ERROR } from './constants'
+import { LOGIN_REQ, LOGIN_HIDE_ERROR, LOGIN_PUBLIC } from './constants'
 
 export function login (wif) {
   return {
     type: LOGIN_REQ,
     wif
+  }
+}
+
+export function publicLogin (pkey) {
+  return {
+    type: LOGIN_PUBLIC,
+    pkey
   }
 }
 

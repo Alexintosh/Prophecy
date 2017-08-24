@@ -5,13 +5,17 @@ import Toolbar from '../../components/Toolbar'
 import Loading from '../../components/Loading'
 import { CenteredCol } from '../../components/Balance'
 import TabContainer from '../Wallet/TabsContainer'
-import {login, hideError} from './actions'
+import {login, hideError, publicLogin} from './actions'
+import {disableClaim} from '../Wallet/actions'
 
 class LoginPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      wif: ''
+      wif: '',
+      public_login: [
+        'AchEwoFAMiR2hph3FTKqoHiuBQ3f3qpmqz'
+      ]
     }
 
     this.hideAlertDialog = this.hideAlertDialog.bind(this)
@@ -32,6 +36,11 @@ class LoginPage extends React.Component {
 
   signin () {
     this.props.dispatch(login(this.state.wif))
+  }
+
+  publicSignin (pkey) {
+    this.props.dispatch(publicLogin(pkey))
+    this.props.dispatch(disableClaim(true))
   }
 
   hideAlertDialog () {
@@ -64,6 +73,12 @@ class LoginPage extends React.Component {
             </Button>
           </CenteredCol>
         </Row>
+
+        { this.state.public_login.map((o, i) => {
+          return (<div key={i} onClick={() => this.publicSignin(o)}>
+            {o}
+          </div>)
+        })}
 
         <AlertDialog
           isOpen={alertDialogShown}

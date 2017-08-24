@@ -93,7 +93,7 @@ export class Balance extends React.Component {
   }
 
   render () {
-    const { NEO, GAS, availaleToClaim, onClaim, claimDisabled, NEO_PRICE, GAS_PRICE } = this.props
+    const { NEO, GAS, availaleToClaim, onClaim, claimDisabled, claimInProgress, NEO_PRICE, GAS_PRICE } = this.props
     return (
       <Wrapper>
         <Row>
@@ -125,9 +125,9 @@ export class Balance extends React.Component {
         <Row>
           <CenteredCol>
             <br /><br />
-            { claimDisabled
+            { claimInProgress
               ? 'You can claim Gas once every 5 minutes'
-            : <Button modifier='large' onClick={onClaim}>Claim {availaleToClaim} Gas</Button>}
+            : <Button modifier='large' disabled={claimDisabled} onClick={onClaim}>Claim {availaleToClaim} Gas</Button>}
           </CenteredCol>
         </Row>
       </Wrapper>

@@ -74,7 +74,7 @@ class MainTab extends React.Component {
   }
 
   refresh () {
-    console.log('Refresh')
+    console.log('Refresh', this.props.public_key)
     this.props.dispatch(fetchTransaction(this.props.public_key))
     this.props.dispatch(fetchBalance(this.props.public_key))
     this.props.dispatch(fetchClaimAmount(this.props.public_key))
@@ -100,6 +100,7 @@ class MainTab extends React.Component {
             GAS_PRICE={this.props.marketPrice.gas}
             availaleToClaim={this.props.wallet.availableToClaim}
             claimDisabled={this.props.claim.disabled}
+            claimInProgress={this.props.claim.inProgress}
             onClaim={doClaim}
             onRefresh={this.refresh} />
 
