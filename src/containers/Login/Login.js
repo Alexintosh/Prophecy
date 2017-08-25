@@ -20,7 +20,7 @@ class LoginPage extends React.Component {
     super(props)
     this.state = {
       wif: '',
-      isLoading: true
+      isLoading: false
     }
 
     this.hideAlertDialog = this.hideAlertDialog.bind(this)
