@@ -1,5 +1,5 @@
 import React from 'react'
-import { Page, Col, Row, Icon, Button, Carousel, CarouselItem, BottomToolbar } from 'react-onsenui'
+import { Page, Col, Row, Icon, Button, Carousel, CarouselItem } from 'react-onsenui'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import startsWith from 'lodash/startsWith'
@@ -10,7 +10,7 @@ import {
 
 export const Num = styled(Col)`
   font-size:2em;
-  padding:30px 20px;
+  padding:20px 20px;
   text-align: center;  
 `
 
