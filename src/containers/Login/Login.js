@@ -44,7 +44,7 @@ class LoginPage extends React.Component {
         this.props.navigator.pushPage({
           component: TabContainer,
           props: {
-            key: 'wallet'
+            key: 'walletPage'
           }
         })
       }, 2000)

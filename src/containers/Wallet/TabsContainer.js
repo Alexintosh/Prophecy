@@ -41,7 +41,7 @@ class TabsContainer extends React.Component {
   render () {
     return (
       <Page renderToolbar={() => <Toolbar
-        onLogout={() => this.props.dispatch(doLogout(this.props.navigator))}
+        onLogout={() => this.props.navigator.popPage()}
         onSwitchNet={() => this.props.dispatch(switchNet(this.props.net))}
         selectedNet={this.props.net}
         showContextualMenu={this.props.isLogged}
