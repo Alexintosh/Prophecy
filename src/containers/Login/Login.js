@@ -41,6 +41,7 @@ class LoginPage extends React.Component {
 
       setTimeout(() => {
         console.log('timeout')
+        this.setState({isLoading: false})
         this.props.navigator.pushPage({
           component: TabContainer,
           props: {
@@ -76,49 +77,46 @@ class LoginPage extends React.Component {
     console.log('this.state.isLoading', this.state.isLoading)
 
     return (
-      <section>
-        <Page
-          renderToolbar={() => <Toolbar title='Prophecy' />}>
-          <Row>
-            <CenteredCol style={{ margin: '20px' }}>
-              <h3>Prophecy</h3>
-              <Input
-                value={wif}
-                onChange={e => this.wifChanged(e)}
-                placeholder='Private Key'
-                style={{ width: '100%', margin: '20px 0' }}
-                type='text'
-                modifier='material'
-                float
+      <Page
+        renderToolbar={() => <Toolbar title='Prophecy' />}>
+        <Row>
+          <CenteredCol style={{ margin: '20px' }}>
+            <h3>Prophecy</h3>
+            <Input
+              value={wif}
+              onChange={e => this.wifChanged(e)}
+              placeholder='Private Key'
+              style={{ width: '100%', margin: '20px 0' }}
+              type='text'
+              modifier='material'
+              float
             />
-              <Button id='signin' onClick={e => this.signin(e)} modifier='large'>
+            <Button id='signin' onClick={e => this.signin(e)} modifier='large'>
               Login
             </Button>
-              <Button id='forgot_btn' modifier='quiet'>
+            <Button id='forgot_btn' modifier='quiet'>
               CREATE WALLET
             </Button>
-            </CenteredCol>
-          </Row>
+          </CenteredCol>
+        </Row>
 
-          <PublicKeyList keys={this.props.cached_public_keys} onSelect={(pkey) => this.publicSignin(pkey)} />
+        <PublicKeyList keys={this.props.cached_public_keys} onSelect={(pkey) => this.publicSignin(pkey)} />
 
-          <AlertDialog
-            isOpen={alertDialogShown}
-            isCancelable={false}>
-            <div className='alert-dialog-title'>Warning!</div>
-            <div className='alert-dialog-content'>
+        <AlertDialog
+          isOpen={alertDialogShown}
+          isCancelable={false}>
+          <div className='alert-dialog-title'>Warning!</div>
+          <div className='alert-dialog-content'>
             Cannot load the wallet, check you private key.
           </div>
-            <div className='alert-dialog-footer'>
-              <button onClick={this.hideAlertDialog} className='alert-dialog-button'>
+          <div className='alert-dialog-footer'>
+            <button onClick={this.hideAlertDialog} className='alert-dialog-button'>
               Ok
             </button>
-            </div>
-          </AlertDialog>
-
-        </Page>
+          </div>
+        </AlertDialog>
         <Loading isOpen={this.state.isLoading} />
-      </section>
+      </Page>
     )
   }
 }

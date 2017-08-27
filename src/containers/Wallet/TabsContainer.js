@@ -4,7 +4,6 @@ import TransactionTab from './TransactionTab'
 import MainTab from './MainTab'
 import SendTab from './SendTab'
 import Toolbar from '../../components/Toolbar'
-import {doLogout} from '../Login/actions'
 import { connect } from 'react-redux'
 import {switchNet} from '../App/actions'
 
