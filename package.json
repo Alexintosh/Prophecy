@@ -34,9 +34,9 @@
   "author": "Alessio Delmonti",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Alexintosh/Ockham/issues"
+    "url": "https://github.com/Alexintosh/Prophecy/issues"
   },
-  "homepage": "https://github.com/Alexintosh/Ockham#readme",
+  "homepage": "https://github.com/Alexintosh/Prophecy#readme",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-core": "^6.25.0",
