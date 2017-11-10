@@ -104,7 +104,7 @@ export const validateTransactionBeforeSending = (
     };
   }
 
-  if (selectedAsset === ASSETS_LABELS.NEO) {
+  if (selectedAsset === ASSETS.NEO) {
     if (parseFloat(sendAmount) !== parseInt(sendAmount)) {
       // check for fractional neo
       return {
@@ -119,7 +119,7 @@ export const validateTransactionBeforeSending = (
         valid: false
       };
     }
-  } else if (selectedAsset === ASSETS_LABELS.GAS) {
+  } else if (selectedAsset === ASSETS.GAS) {
     if (parseFloat(sendAmount) > gasBalance) {
       return {
         error: "You do not have enough GAS to send.",
@@ -142,14 +142,14 @@ export const validateTransactionBeforeSending = (
   };
 };
 
-export const sendTransaction = (sendAddress, sendAmount, asset='GAS') => {
+export const sendTransaction = (sendAddress, sendAmount, asset = 'GAS') => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       const state = getState()
       const wif = state.account.wif
       const net = state.app.net
-      const neo = state.wallet.Neo
-      const gas = state.wallet.Gas
+      const neo = state.wallet.Neo.balance
+      const gas = state.wallet.Gas.balance
       const selectedAsset = asset
 
       const rejectTransaction = error => {

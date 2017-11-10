@@ -51,8 +51,9 @@ class SendTab extends React.Component {
       transaction: {
         started: false,
         pending: false,
+        asset: 'NEO',
         to: '',
-        amout: 0
+        amount: 0
       },
       assets: [
         {
@@ -70,6 +71,7 @@ class SendTab extends React.Component {
       amount: false
     }
     this.changeAsset = this.changeAsset.bind(this)
+    this.addressChanged = this.addressChanged.bind(this)
     this.numberPressed = this.numberPressed.bind(this)
     this.sendAsset = this.sendAsset.bind(this)
   }
@@ -78,11 +80,24 @@ class SendTab extends React.Component {
 
   }
 
+  addressChanged (e) {
+    console.log(e.target.value);
+    this.setState({
+      ...this.state,
+      transaction: {
+        ...this.state.transaction,
+        to: e.target.value
+      }
+    })
+  }
+
   changeAsset (e) {
     if (e.activeIndex === 0 && this.state.amount) {
       const amount = parseInt(this.state.amount)
       if (amount <= 0) {
-        this.setState({index: e.activeIndex, amount: 0})
+        this.setState({
+          index: e.activeIndex
+        })
         return false
       }
     }
@@ -95,7 +110,7 @@ class SendTab extends React.Component {
 
   sendAsset (amout) {
     const selected = this.state.assets[this.state.index].label
-    this.props.dispatch(sendTransaction('ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM', amout, selected))
+    this.props.dispatch(sendTransaction(this.state.transaction.to, amout, selected))
   }
 
   numberPressed (num) {
@@ -146,7 +161,9 @@ class SendTab extends React.Component {
       newSum = `${prev}${num}`
     }
 
-    this.setState({amount: newSum})
+    this.setState({
+      amount: newSum
+    })
   }
 
   getContent () {
@@ -217,7 +234,16 @@ class SendTab extends React.Component {
               ))}
             </div>
           </Carousel>
-
+          <Row>
+            <Input
+              onChange={(e) => this.addressChanged(e)}
+              placeholder='Recipient Address'
+              style={{ width: '100%', margin: '20px 0', margin: '20px' }}
+              type='text'
+              modifier='material'
+              float
+              />
+            </Row>
           <Row>
             <Row>
               <Num onClick={() => this.numberPressed(1)}>1</Num>
@@ -228,6 +254,11 @@ class SendTab extends React.Component {
               <Num onClick={() => this.numberPressed(4)}>4</Num>
               <Num onClick={() => this.numberPressed(5)}>5</Num>
               <Num onClick={() => this.numberPressed(6)}>6</Num>
+            </Row>
+            <Row>
+              <Num onClick={() => this.numberPressed(7)}>7</Num>
+              <Num onClick={() => this.numberPressed(8)}>8</Num>
+              <Num onClick={() => this.numberPressed(9)}>9</Num>
             </Row>
             <Row>
               <Num onClick={() => this.numberPressed('.')}>.</Num>
