@@ -9,6 +9,10 @@ import {
   hideToast
 } from '../App/actions.js'
 
+import {
+  sendTransaction
+} from './actions.js'
+
 export const Num = styled(Col)`
   font-size:2em;
   padding:20px 20px;
@@ -67,6 +71,7 @@ class SendTab extends React.Component {
     }
     this.changeAsset = this.changeAsset.bind(this)
     this.numberPressed = this.numberPressed.bind(this)
+    this.sendAsset = this.sendAsset.bind(this)
   }
 
   componentDidMount () {
@@ -88,20 +93,9 @@ class SendTab extends React.Component {
   componentWillReceiveProps (nextProps) {
   }
 
-  sendAsset () {
-    const assetType = 'Gas'
-    const amount = 0.01
-    doSendAsset('TestNet', 'ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM', fromWif, assetType, amount)
-    .then((response) => {
-      console.log('RS', response)
-      if (response.result === undefined) {
-        console.log('Transaction failed!')
-      } else {
-        console.log('Transaction complete! Your balance will automatically update when the blockchain has processed it.')
-      }
-    }).catch((e) => {
-      console.log('Transaction failed!')
-    })
+  sendAsset (amout) {
+    console.log('AMOUT', amout)
+    this.props.dispatch(sendTransaction('ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM', amout, 'GAS'))
   }
 
   numberPressed (num) {
@@ -242,7 +236,7 @@ class SendTab extends React.Component {
             </Row>
           </Row>
           <Row>
-            <Button modifier='large' onClick={() => this.props.dispatch(showToast(parseFloat(this.state.amount)))}>CONTINUE</Button>
+            <Button modifier='large' onClick={() => this.sendAsset(this.state.amount)}>CONTINUE</Button>
           </Row>
         </IF>
         <IF what={step === 1}>
