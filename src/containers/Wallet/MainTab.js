@@ -23,19 +23,7 @@ import { connect } from 'react-redux'
 
 class MainTab extends React.Component {
   // componentDidMount() {
-  // const assetType = 'Gas';
-  // const amount = 0.01;
-  // doSendAsset('TestNet', toAddress, fromWif, assetType, amount)
-  // .then((response) => {
-  //   console.log("RS", response);
-  //   if (response.result === undefined){
-  //     console.log("Transaction failed!");
-  //   } else {
-  //     console.log("Transaction complete! Your balance will automatically update when the blockchain has processed it.")
-  //   }
-  // }).catch((e) => {
-  //   console.log("Transaction failed!");
-  // });
+
   // }
 
   constructor (props) {

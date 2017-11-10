@@ -1,8 +1,9 @@
 import React from 'react'
-import { Page, Col, Row, Icon, Button, Carousel, CarouselItem } from 'react-onsenui'
+import { Page, Col, Row, Icon, Button, Carousel, CarouselItem, Input } from 'react-onsenui'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import startsWith from 'lodash/startsWith'
+import IF from '../../components/If'
 import {
   showToast,
   hideToast
@@ -42,6 +43,13 @@ class SendTab extends React.Component {
     super(props)
 
     this.state = {
+      step: 0,
+      transaction: {
+        started: false,
+        pending: false,
+        to: '',
+        amout: 0
+      },
       assets: [
         {
           label: 'NEO',
@@ -78,6 +86,22 @@ class SendTab extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
+  }
+
+  sendAsset () {
+    const assetType = 'Gas'
+    const amount = 0.01
+    doSendAsset('TestNet', 'ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM', fromWif, assetType, amount)
+    .then((response) => {
+      console.log('RS', response)
+      if (response.result === undefined) {
+        console.log('Transaction failed!')
+      } else {
+        console.log('Transaction complete! Your balance will automatically update when the blockchain has processed it.')
+      }
+    }).catch((e) => {
+      console.log('Transaction failed!')
+    })
   }
 
   numberPressed (num) {
@@ -134,6 +158,10 @@ class SendTab extends React.Component {
   getContent () {
   }
 
+  addressOnChange () {
+
+  }
+
   render () {
     // TODO animation when price changes, numbers going progressively
     let gasNumber
@@ -151,69 +179,83 @@ class SendTab extends React.Component {
       gasNumber = this.state.amount
     }
 
+    const {step} = this.state
     return (
       <Page>
-        <Carousel onPostChange={this.changeAsset} index={this.state.index} fullscreen swipeable autoScroll overscrollable style={{marginBottom: '10px', textAlign: 'center', height: '200px', position: 'relative', color: '#fff'}}>
-          <CarouselItem key={0} style={{ background: '#f29e2e' }}>
-            <Row>
-              <Screen>
-                {parseInt(this.state.amount) || <Placeholder>0</Placeholder>} NEO
+        <IF what={step === 0}>
+          <Carousel onPostChange={this.changeAsset} index={this.state.index} fullscreen swipeable autoScroll overscrollable style={{marginBottom: '10px', textAlign: 'center', height: '200px', position: 'relative', color: '#fff'}}>
+            <CarouselItem key={0} style={{ background: '#f29e2e' }}>
+              <Row>
+                <Screen>
+                  {parseInt(this.state.amount) || <Placeholder>0</Placeholder>} NEO
+                  </Screen>
+              </Row>
+              <Row>
+                <Screen>
+                    $ {this.state.amount ? (this.props.price.neo * parseFloat(this.state.amount)).toFixed(2) : 0}
                 </Screen>
-            </Row>
-            <Row>
-              <Screen>
-                  $ {this.state.amount ? (this.props.price.neo * parseFloat(this.state.amount)).toFixed(2) : 0}
-              </Screen>
-            </Row>
-          </CarouselItem>
-          <CarouselItem key={1} style={{ background: '#2C9FA3' }}>
-            <Row>
-              <Screen>
-                {gasNumber}{placeholder} GAS
+              </Row>
+            </CarouselItem>
+            <CarouselItem key={1} style={{ background: '#2C9FA3' }}>
+              <Row>
+                <Screen>
+                  {gasNumber}{placeholder} GAS
+                  </Screen>
+              </Row>
+              <Row>
+                <Screen>
+                    $ {this.state.amount ? (this.props.price.gas * parseFloat(this.state.amount)).toFixed(2) : 0}
                 </Screen>
-            </Row>
-            <Row>
-              <Screen>
-                  $ {this.state.amount ? (this.props.price.gas * parseFloat(this.state.amount)).toFixed(2) : 0}
-              </Screen>
-            </Row>
-          </CarouselItem>
-          <div style={{
-            textAlign: 'center',
-            fontSize: '20px',
-            position: 'absolute',
-            bottom: '10px',
-            left: '0px',
-            right: '0px'
-          }}>
-            {[1, 2].map((item, index) => (
-              <span key={index} style={{cursor: 'pointer'}}>
-                {this.state.index === index ? '\u25CF' : '\u25CB'}
-              </span>
-            ))}
-          </div>
-        </Carousel>
+              </Row>
+            </CarouselItem>
+            <div style={{
+              textAlign: 'center',
+              fontSize: '20px',
+              position: 'absolute',
+              bottom: '10px',
+              left: '0px',
+              right: '0px'
+            }}>
+              {[1, 2].map((item, index) => (
+                <span key={index} style={{cursor: 'pointer'}}>
+                  {this.state.index === index ? '\u25CF' : '\u25CB'}
+                </span>
+              ))}
+            </div>
+          </Carousel>
 
-        <Row>
           <Row>
-            <Num onClick={() => this.numberPressed(1)}>1</Num>
-            <Num onClick={() => this.numberPressed(2)}>2</Num>
-            <Num onClick={() => this.numberPressed(3)}>3</Num>
+            <Row>
+              <Num onClick={() => this.numberPressed(1)}>1</Num>
+              <Num onClick={() => this.numberPressed(2)}>2</Num>
+              <Num onClick={() => this.numberPressed(3)}>3</Num>
+            </Row>
+            <Row>
+              <Num onClick={() => this.numberPressed(4)}>4</Num>
+              <Num onClick={() => this.numberPressed(5)}>5</Num>
+              <Num onClick={() => this.numberPressed(6)}>6</Num>
+            </Row>
+            <Row>
+              <Num onClick={() => this.numberPressed('.')}>.</Num>
+              <Num onClick={() => this.numberPressed(0)}>0</Num>
+              <Num onClick={() => this.numberPressed('DEL')}><Icon icon='ion-android-arrow-back' size={20} /></Num>
+            </Row>
           </Row>
           <Row>
-            <Num onClick={() => this.numberPressed(4)}>4</Num>
-            <Num onClick={() => this.numberPressed(5)}>5</Num>
-            <Num onClick={() => this.numberPressed(6)}>6</Num>
+            <Button modifier='large' onClick={() => this.props.dispatch(showToast(parseFloat(this.state.amount)))}>CONTINUE</Button>
           </Row>
-          <Row>
-            <Num onClick={() => this.numberPressed('.')}>.</Num>
-            <Num onClick={() => this.numberPressed(0)}>0</Num>
-            <Num onClick={() => this.numberPressed('DEL')}><Icon icon='ion-android-arrow-back' size={20} /></Num>
-          </Row>
-        </Row>
-        <Row>
-          <Button modifier='large' onClick={() => this.props.dispatch(showToast(parseFloat(this.state.amount)))}>CONTINUE</Button>
-        </Row>
+        </IF>
+        <IF what={step === 1}>
+          <Input
+            value={this.state.transaction.to}
+            onChange={e => this.addressOnChange(e)}
+            placeholder='Private Key'
+            style={{ width: '100%', margin: '20px 0' }}
+            type='text'
+            modifier='material'
+            float
+          />
+        </IF>
       </Page>
     )
   }

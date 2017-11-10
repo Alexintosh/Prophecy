@@ -100,8 +100,8 @@ export class Balance extends React.Component {
           <CenteredCol>
             <Split>
               <Label>NEO</Label>
-              <AmountBig>{NEO}</AmountBig>
-              <AmountSmall>{coin2FIAT(NEO, NEO_PRICE)}</AmountSmall>
+              <AmountBig>{NEO.balance}</AmountBig>
+              <AmountSmall>{coin2FIAT(NEO.balance, NEO_PRICE)}</AmountSmall>
             </Split>
           </CenteredCol>
 
@@ -117,8 +117,8 @@ export class Balance extends React.Component {
           <CenteredCol>
             <Split>
               <Label>GAS</Label>
-              <AmountBig>{GAS < 0.001 ? 0 : GAS.toPrecision(5)}</AmountBig>
-              <AmountSmall>{coin2FIAT(GAS, GAS_PRICE)}</AmountSmall>
+              <AmountBig>{GAS.balance < 0.001 ? 0 : GAS.balance.toPrecision(5)}</AmountBig>
+              <AmountSmall>{coin2FIAT(GAS.balance, GAS_PRICE)}</AmountSmall>
             </Split>
           </CenteredCol>
         </Row>

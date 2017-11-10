@@ -23,8 +23,8 @@ import {
 export function setBalance (data) {
   return {
     type: SET_BALANCE,
-    Neo: data.Neo,
-    Gas: data.Gas
+    Neo: data.NEO,
+    Gas: data.GAS
   }
 }
 
@@ -98,6 +98,7 @@ export function fetchMarketPrice () {
 export function fetchBalance (pkey, net = 'TestNet') {
   return (dispatch) => getBalance(net, pkey)
     .then((data) => {
+      console.log('DATA', data)
       dispatch(setBalance(data))
     })
 }
