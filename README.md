@@ -1,18 +1,15 @@
 <img src="https://github.com/Alexintosh/Prophecy/blob/master/logo.jpg?raw=true" alt="Ockham logo">
 
-<div align="center"><strong>⚡ Prophecy ⚡</strong></div>
+<div align="center"><strong> Prophecy </strong></div>
 <br />
 
-🔥 The first open-source mobile wallet for the NEO blockchain 🔥 🏦.
+ The first open-source mobile wallet for the NEO blockchain  .
 
-📱 Crossplatform both <b>iOs</b> and <b>Android</b> are supported!
+ Crossplatform both <b>iOs</b> and <b>Android</b> are supported!
 
 <b>Prophecy</b> is based on Ockham a mobile app framework based on [React](https://facebook.github.io/react/), [Cordova](https://cordova.apache.org/) and Onsenui component library.
 
-<img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot2.png?raw=true" alt="Ockham logo">
-<img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot4.png?raw=true" alt="Ockham logo">
-<img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot1.png?raw=true" alt="Ockham logo">
-<img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot3.png?raw=true" alt="Ockham logo">
+<img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot2.png?raw=true" alt="Dashboard" width="200"><img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot4.png?raw=true" alt="Ockham logo" width="200"><img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot1.png?raw=true" alt="Ockham logo" width="200"><img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot3.png?raw=true" alt="Ockham logo" width="200">
 ## <a name="features"></a>Features
 
 - [X] Transaction History
@@ -69,7 +66,7 @@ You can change the port on which the HTTP server listens and more dev server rel
 - Star the GitHub repo :star:
 - Create pull requests, submit bugs, suggest new features or documentation updates :wrench:
 - Follow me on [Twitter](https://twitter.com/alexintosh) :feet:
-- Donate NEO/GAS at `ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM` 🙏
+- Donate NEO/GAS at `ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM` 
 
 ## Can I hire you?
 Yes!  Ping me on [Twitter](https://twitter.com/alexintosh) or get in touch by [mail](mailto:alessio.d@gmail.com)
