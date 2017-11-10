@@ -9,10 +9,10 @@
 
 <b>Prophecy</b> is based on Ockham a mobile app framework based on [React](https://facebook.github.io/react/), [Cordova](https://cordova.apache.org/) and Onsenui component library.
 
-<img src="https://github.com/Alexintosh/Prophecy/blob/master/screenshots/ScreenShot2.png?raw=true" alt="Ockham logo">
-<img src="https://github.com/Alexintosh/Prophecy/blob/master/screenshots/ScreenShot4.png?raw=true" alt="Ockham logo">
-<img src="https://github.com/Alexintosh/Prophecy/blob/master/screenshots/ScreenShot1.png?raw=true" alt="Ockham logo">
-<img src="https://github.com/Alexintosh/Prophecy/blob/master/screenshots/ScreenShot3.png?raw=true" alt="Ockham logo">
+<img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot2.png?raw=true" alt="Ockham logo">
+<img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot4.png?raw=true" alt="Ockham logo">
+<img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot1.png?raw=true" alt="Ockham logo">
+<img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot3.png?raw=true" alt="Ockham logo">
 ## <a name="features"></a>Features
 
 - [X] Transaction History
