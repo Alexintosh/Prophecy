@@ -16,11 +16,11 @@
 - [X] Charts
 - [X] Claim Gas
 - [X] Switch Net
-- [ ] Create New Wallet
-- [ ] Send NEO
-- [ ] Send GAS
+- [X] Send NEO
+- [X] Send GAS
 - [ ] QRcode
 - [ ] Fingerprint
+- [ ] Create New Wallet
 
 #### Dev Features
 * Webpack setup including dev server and build process
@@ -77,18 +77,47 @@ I will be happy to work with you!
 ```
 |____app.js
 |____components
+| |____.DS_Store
 | |____AccountInfo.js
 | |____Balance.js
 | |____BalanceChart.js
+| |____If.js
+| |____Loading.js
+| |____PublicKeyList.js
+| |____PublicKeyListItem.js
+| |____Separator.js
 | |____Toolbar.js
+| |____TransactionItem.js
+| |____TransactionList.js
 |____containers
+| |____.DS_Store
 | |____App
+| | |____actions.js
 | | |____app.js
-| |____ExamplePages
-| | |____TabPage.js
-| | |____TransactionList.js
+| | |____constants.js
+| | |____reducer.js
+| |____Login
+| | |____actions.js
+| | |____constants.js
+| | |____Login.js
+| | |____reducer.js
+| |____Wallet
+| | |____actions.js
+| | |____constants.js
+| | |____MainTab.js
+| | |____reducer.js
+| | |____SendTab.js
+| | |____TabsContainer.js
 | | |____TransactionTab.js
+|____env
+|____globalStyles.js
 |____index.html
+|____reducers.js
+|____store.js
+|____theme.css
+|____utils
+| |____CryptoCompareApi.js
+| |____LocalStorage.js
 |____www
 |____hooks
 |____platforms
