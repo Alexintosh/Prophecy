@@ -94,8 +94,8 @@ class SendTab extends React.Component {
   }
 
   sendAsset (amout) {
-    console.log('AMOUT', amout)
-    this.props.dispatch(sendTransaction('ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM', amout, 'GAS'))
+    const selected = this.state.assets[this.state.index].label
+    this.props.dispatch(sendTransaction('ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM', amout, selected))
   }
 
   numberPressed (num) {
