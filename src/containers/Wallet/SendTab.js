@@ -1,12 +1,18 @@
 import React from 'react'
-import { Page, Col, Row, Icon, Button, Carousel, CarouselItem } from 'react-onsenui'
+import {notification} from 'onsenui'
+import { Page, Col, Row, Icon, Button, Carousel, CarouselItem, Input } from 'react-onsenui'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import startsWith from 'lodash/startsWith'
+import IF from '../../components/If'
 import {
   showToast,
   hideToast
 } from '../App/actions.js'
+
+import {
+  sendTransaction
+} from './actions.js'
 
 export const Num = styled(Col)`
   font-size:2em;
@@ -42,6 +48,14 @@ class SendTab extends React.Component {
     super(props)
 
     this.state = {
+      step: 0,
+      transaction: {
+        started: false,
+        pending: false,
+        asset: 'NEO',
+        to: '',
+        amount: 0
+      },
       assets: [
         {
           label: 'NEO',
@@ -58,18 +72,32 @@ class SendTab extends React.Component {
       amount: false
     }
     this.changeAsset = this.changeAsset.bind(this)
+    this.addressChanged = this.addressChanged.bind(this)
     this.numberPressed = this.numberPressed.bind(this)
+    this.sendAsset = this.sendAsset.bind(this)
   }
 
   componentDidMount () {
 
   }
 
+  addressChanged (e) {
+    this.setState({
+      ...this.state,
+      transaction: {
+        ...this.state.transaction,
+        to: e.target.value
+      }
+    })
+  }
+
   changeAsset (e) {
     if (e.activeIndex === 0 && this.state.amount) {
       const amount = parseInt(this.state.amount)
       if (amount <= 0) {
-        this.setState({index: e.activeIndex, amount: 0})
+        this.setState({
+          index: e.activeIndex
+        })
         return false
       }
     }
@@ -78,6 +106,11 @@ class SendTab extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
+  }
+
+  sendAsset (amout) {
+    const selected = this.state.assets[this.state.index].label
+    this.props.dispatch(sendTransaction(this.state.transaction.to, amout, selected))
   }
 
   numberPressed (num) {
@@ -128,10 +161,16 @@ class SendTab extends React.Component {
       newSum = `${prev}${num}`
     }
 
-    this.setState({amount: newSum})
+    this.setState({
+      amount: newSum
+    })
   }
 
   getContent () {
+  }
+
+  addressOnChange () {
+
   }
 
   render () {
@@ -151,69 +190,97 @@ class SendTab extends React.Component {
       gasNumber = this.state.amount
     }
 
+    const {step} = this.state
     return (
       <Page>
-        <Carousel onPostChange={this.changeAsset} index={this.state.index} fullscreen swipeable autoScroll overscrollable style={{marginBottom: '10px', textAlign: 'center', height: '200px', position: 'relative', color: '#fff'}}>
-          <CarouselItem key={0} style={{ background: '#f29e2e' }}>
-            <Row>
-              <Screen>
-                {parseInt(this.state.amount) || <Placeholder>0</Placeholder>} NEO
+        <IF what={step === 0}>
+          <Carousel onPostChange={this.changeAsset} index={this.state.index} fullscreen swipeable autoScroll overscrollable style={{marginBottom: '10px', textAlign: 'center', height: '200px', position: 'relative', color: '#fff'}}>
+            <CarouselItem key={0} style={{ background: '#f29e2e' }}>
+              <Row>
+                <Screen>
+                  {parseInt(this.state.amount) || <Placeholder>0</Placeholder>} NEO
+                  </Screen>
+              </Row>
+              <Row>
+                <Screen>
+                    $ {this.state.amount ? (this.props.price.neo * parseFloat(this.state.amount)).toFixed(2) : 0}
                 </Screen>
-            </Row>
-            <Row>
-              <Screen>
-                  $ {this.state.amount ? (this.props.price.neo * parseFloat(this.state.amount)).toFixed(2) : 0}
-              </Screen>
-            </Row>
-          </CarouselItem>
-          <CarouselItem key={1} style={{ background: '#2C9FA3' }}>
-            <Row>
-              <Screen>
-                {gasNumber}{placeholder} GAS
+              </Row>
+            </CarouselItem>
+            <CarouselItem key={1} style={{ background: '#2C9FA3' }}>
+              <Row>
+                <Screen>
+                  {gasNumber}{placeholder} GAS
+                  </Screen>
+              </Row>
+              <Row>
+                <Screen>
+                    $ {this.state.amount ? (this.props.price.gas * parseFloat(this.state.amount)).toFixed(2) : 0}
                 </Screen>
+              </Row>
+            </CarouselItem>
+            <div style={{
+              textAlign: 'center',
+              fontSize: '20px',
+              position: 'absolute',
+              bottom: '10px',
+              left: '0px',
+              right: '0px'
+            }}>
+              {[1, 2].map((item, index) => (
+                <span key={index} style={{cursor: 'pointer'}}>
+                  {this.state.index === index ? '\u25CF' : '\u25CB'}
+                </span>
+              ))}
+            </div>
+          </Carousel>
+          <Row>
+            <Input
+              onChange={(e) => this.addressChanged(e)}
+              placeholder='Recipient Address'
+              style={{ width: '100%', margin: '20px 0', margin: '20px' }}
+              type='text'
+              modifier='material'
+              float
+              />
+          </Row>
+          <Row>
+            <Row>
+              <Num onClick={() => this.numberPressed(1)}>1</Num>
+              <Num onClick={() => this.numberPressed(2)}>2</Num>
+              <Num onClick={() => this.numberPressed(3)}>3</Num>
             </Row>
             <Row>
-              <Screen>
-                  $ {this.state.amount ? (this.props.price.gas * parseFloat(this.state.amount)).toFixed(2) : 0}
-              </Screen>
+              <Num onClick={() => this.numberPressed(4)}>4</Num>
+              <Num onClick={() => this.numberPressed(5)}>5</Num>
+              <Num onClick={() => this.numberPressed(6)}>6</Num>
             </Row>
-          </CarouselItem>
-          <div style={{
-            textAlign: 'center',
-            fontSize: '20px',
-            position: 'absolute',
-            bottom: '10px',
-            left: '0px',
-            right: '0px'
-          }}>
-            {[1, 2].map((item, index) => (
-              <span key={index} style={{cursor: 'pointer'}}>
-                {this.state.index === index ? '\u25CF' : '\u25CB'}
-              </span>
-            ))}
-          </div>
-        </Carousel>
-
-        <Row>
-          <Row>
-            <Num onClick={() => this.numberPressed(1)}>1</Num>
-            <Num onClick={() => this.numberPressed(2)}>2</Num>
-            <Num onClick={() => this.numberPressed(3)}>3</Num>
+            <Row>
+              <Num onClick={() => this.numberPressed(7)}>7</Num>
+              <Num onClick={() => this.numberPressed(8)}>8</Num>
+              <Num onClick={() => this.numberPressed(9)}>9</Num>
+            </Row>
+            <Row>
+              <Num onClick={() => this.numberPressed('.')}>.</Num>
+              <Num onClick={() => this.numberPressed(0)}>0</Num>
+              <Num onClick={() => this.numberPressed('DEL')}><Icon icon='ion-android-arrow-back' size={20} /></Num>
+            </Row>
           </Row>
           <Row>
-            <Num onClick={() => this.numberPressed(4)}>4</Num>
-            <Num onClick={() => this.numberPressed(5)}>5</Num>
-            <Num onClick={() => this.numberPressed(6)}>6</Num>
+            <Button modifier='large' onClick={() => this.sendAsset(this.state.amount)}>CONTINUE</Button>
           </Row>
-          <Row>
-            <Num onClick={() => this.numberPressed('.')}>.</Num>
-            <Num onClick={() => this.numberPressed(0)}>0</Num>
-            <Num onClick={() => this.numberPressed('DEL')}><Icon icon='ion-android-arrow-back' size={20} /></Num>
-          </Row>
-        </Row>
-        <Row>
-          <Button modifier='large' onClick={() => this.props.dispatch(showToast(parseFloat(this.state.amount)))}>CONTINUE</Button>
-        </Row>
+        </IF>
+        <IF what={step === 1}>
+          <Input
+            value={this.state.transaction.to}
+            onChange={e => this.addressOnChange(e)}
+            placeholder='Private Key'
+            style={{ width: '100%', margin: '20px 0' }}
+            type='text'
+            modifier='material'
+            float
+          />
+        </IF>
       </Page>
     )
   }
@@ -223,6 +290,7 @@ const mapStateToProps = (state) => ({
   wallet: state.wallet,
   price: state.wallet.price,
   public_key: state.account.account.address
+  // TODO check state transaction and reset values.
 })
 
 export default connect(mapStateToProps)(SendTab)

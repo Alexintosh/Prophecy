@@ -1,26 +1,28 @@
 <img src="https://github.com/Alexintosh/Prophecy/blob/master/logo.jpg?raw=true" alt="Ockham logo">
 
-<div align="center"><strong>⚡ Prophecy ⚡</strong></div>
+<div align="center"><strong> Prophecy </strong></div>
 <br />
 
-🔥 The first open-source mobile wallet for the NEO blockchain 🔥 🏦.
+ The first open-source mobile wallet for the NEO blockchain  .
 
-📱 Crossplatform both <b>iOs</b> and <b>Android</b> are supported!
+ Crossplatform both <b>iOs</b> and <b>Android</b> are supported!
 
 <b>Prophecy</b> is based on Ockham a mobile app framework based on [React](https://facebook.github.io/react/), [Cordova](https://cordova.apache.org/) and Onsenui component library.
 
-
+<img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot2.png?raw=true" alt="Dashboard" width="200"><img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot4.png?raw=true" alt="Ockham logo" width="200"><img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot1.png?raw=true" alt="Ockham logo" width="200"><img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot3.png?raw=true" alt="Ockham logo" width="200">
 ## <a name="features"></a>Features
 
 - [X] Transaction History
-- [X] Charts
 - [X] Claim Gas
 - [X] Switch Net
-- [ ] Create New Wallet
-- [ ] Send NEO
-- [ ] Send GAS
+- [X] Send NEO
+- [X] Send GAS
+
+## <a name="features"></a>Roadmap v2
 - [ ] QRcode
 - [ ] Fingerprint
+- [ ] Create New Wallet
+- [ ] Pin based authentification
 
 #### Dev Features
 * Webpack setup including dev server and build process
@@ -66,7 +68,7 @@ You can change the port on which the HTTP server listens and more dev server rel
 - Star the GitHub repo :star:
 - Create pull requests, submit bugs, suggest new features or documentation updates :wrench:
 - Follow me on [Twitter](https://twitter.com/alexintosh) :feet:
-- Donate NEO/GAS at `ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM` 🙏
+- Donate NEO/GAS at `ARTPi8cJaBQbLxJPTa5wn5RrVZFhC7BwsM` 
 
 ## Can I hire you?
 Yes!  Ping me on [Twitter](https://twitter.com/alexintosh) or get in touch by [mail](mailto:alessio.d@gmail.com)
@@ -77,18 +79,47 @@ I will be happy to work with you!
 ```
 |____app.js
 |____components
+| |____.DS_Store
 | |____AccountInfo.js
 | |____Balance.js
 | |____BalanceChart.js
+| |____If.js
+| |____Loading.js
+| |____PublicKeyList.js
+| |____PublicKeyListItem.js
+| |____Separator.js
 | |____Toolbar.js
+| |____TransactionItem.js
+| |____TransactionList.js
 |____containers
+| |____.DS_Store
 | |____App
+| | |____actions.js
 | | |____app.js
-| |____ExamplePages
-| | |____TabPage.js
-| | |____TransactionList.js
+| | |____constants.js
+| | |____reducer.js
+| |____Login
+| | |____actions.js
+| | |____constants.js
+| | |____Login.js
+| | |____reducer.js
+| |____Wallet
+| | |____actions.js
+| | |____constants.js
+| | |____MainTab.js
+| | |____reducer.js
+| | |____SendTab.js
+| | |____TabsContainer.js
 | | |____TransactionTab.js
+|____env
+|____globalStyles.js
 |____index.html
+|____reducers.js
+|____store.js
+|____theme.css
+|____utils
+| |____CryptoCompareApi.js
+| |____LocalStorage.js
 |____www
 |____hooks
 |____platforms

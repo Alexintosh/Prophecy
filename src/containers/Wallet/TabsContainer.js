@@ -21,7 +21,7 @@ class TabsContainer extends React.Component {
 
   renderTabs (activeIndex, tabbar) {
     // navigator={this.props.navigator}
-    return [
+    const tabs = [
       {
         content: <MainTab key='tab_main' active={activeIndex === 0} />,
         tab: <Tab key='tab_main_' label='Wallet' />
@@ -35,6 +35,14 @@ class TabsContainer extends React.Component {
         tab: <Tab key='tab_transaction' label='Transaction' />
       }
     ]
+
+    const resTabs = []
+    resTabs.push(tabs[0])
+    if (this.props.hasPkey) {
+      resTabs.push(tabs[1])
+    }
+    resTabs.push(tabs[2])
+    return resTabs
   }
 
   render () {
@@ -63,7 +71,8 @@ class TabsContainer extends React.Component {
 
 const mapStateToProps = (state) => ({
   net: state.app.net,
-  isLogged: state.account.account.address
+  isLogged: state.account.account.address,
+  hasPkey: state.account.account.privateKey
 })
 
 export default connect(mapStateToProps)(TabsContainer)

@@ -2,7 +2,7 @@ import { Col, Row, Icon, Button } from 'react-onsenui'
 import styled from 'styled-components'
 import React from 'react'
 import {coin2FIAT} from '../utils/CryptoCompareApi'
-
+import IF from './If'
 export const CenteredCol = styled(Col)`
     align-items: center;
     justify-content: center;
@@ -96,40 +96,42 @@ export class Balance extends React.Component {
     const { NEO, GAS, availaleToClaim, onClaim, claimDisabled, claimInProgress, NEO_PRICE, GAS_PRICE } = this.props
     return (
       <Wrapper>
-        <Row>
-          <CenteredCol>
-            <Split>
-              <Label>NEO</Label>
-              <AmountBig>{NEO}</AmountBig>
-              <AmountSmall>{coin2FIAT(NEO, NEO_PRICE)}</AmountSmall>
-            </Split>
-          </CenteredCol>
+        <IF what={NEO.balance && GAS.balance}>
+          <Row>
+            <CenteredCol>
+              <Split>
+                <Label>NEO</Label>
+                <AmountBig>{NEO.balance}</AmountBig>
+                <AmountSmall>{coin2FIAT(NEO.balance, NEO_PRICE)}</AmountSmall>
+              </Split>
+            </CenteredCol>
 
-          <CenteredCol>
-            <Split onClick={this.refresh.bind(this)}>
-              <Label>Refresh</Label>
-              <RefreshButton>
-                <Icon size={30} icon='md-refresh' spin={this.state.isLoading} />
-              </RefreshButton>
-            </Split>
-          </CenteredCol>
+            <CenteredCol>
+              <Split onClick={this.refresh.bind(this)}>
+                <Label>Refresh</Label>
+                <RefreshButton>
+                  <Icon size={30} icon='md-refresh' spin={this.state.isLoading} />
+                </RefreshButton>
+              </Split>
+            </CenteredCol>
 
-          <CenteredCol>
-            <Split>
-              <Label>GAS</Label>
-              <AmountBig>{GAS < 0.001 ? 0 : GAS.toPrecision(5)}</AmountBig>
-              <AmountSmall>{coin2FIAT(GAS, GAS_PRICE)}</AmountSmall>
-            </Split>
-          </CenteredCol>
-        </Row>
-        <Row>
-          <CenteredCol>
-            <br /><br />
-            { claimInProgress
-              ? 'You can claim Gas once every 5 minutes'
-            : <Button modifier='large' disabled={claimDisabled} onClick={onClaim}>Claim {availaleToClaim} Gas</Button>}
-          </CenteredCol>
-        </Row>
+            <CenteredCol>
+              <Split>
+                <Label>GAS</Label>
+                <AmountBig>{GAS.balance < 0.001 ? 0 : GAS.balance.toPrecision(5)}</AmountBig>
+                <AmountSmall>{coin2FIAT(GAS.balance, GAS_PRICE)}</AmountSmall>
+              </Split>
+            </CenteredCol>
+          </Row>
+          <Row>
+            <CenteredCol>
+              <br /><br />
+              { claimInProgress
+                ? 'You can claim Gas once every 5 minutes'
+              : <Button modifier='large' disabled={claimDisabled} onClick={onClaim}>Claim {availaleToClaim} Gas</Button>}
+            </CenteredCol>
+          </Row>
+        </IF>
       </Wrapper>
     )
   }
