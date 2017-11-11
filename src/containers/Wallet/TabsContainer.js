@@ -72,7 +72,7 @@ class TabsContainer extends React.Component {
 const mapStateToProps = (state) => ({
   net: state.app.net,
   isLogged: state.account.account.address,
-  hasPkey: state.account.privateKey
+  hasPkey: state.account.account.privateKey
 })
 
 export default connect(mapStateToProps)(TabsContainer)
