@@ -8,8 +8,8 @@ import {
 const initialState = {
   net: 'TestNet',
   toast: {
-    isShown: true,
-    message: 'Accura ai lupi'
+    isShown: false,
+    message: 'Welcome 😊 !'
   }
 }
 

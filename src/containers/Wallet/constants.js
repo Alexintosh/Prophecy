@@ -1,3 +1,13 @@
+export const ASSETS = {
+  NEO: 'NEO',
+  GAS: 'GAS'
+}
+
+export const ASSETS_LABELS = {
+  [ASSETS.NEO]: 'Neo',
+  [ASSETS.GAS]: 'Gas'
+}
+
 export const SET_BALANCE = 'Wallet/SET_BALANCE'
 export const SET_MARKET_PRICE = 'Wallet/SET_MARKET_PRICE'
 export const RESET_PRICE = 'Wallet/RESET_PRICE'

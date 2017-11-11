@@ -21,27 +21,9 @@ import {
 } from './actions'
 import { connect } from 'react-redux'
 
-// const data = [
-//   {name: 'june', uv: 4000, pv: 2400, amt: 2400},
-//   {name: 'july', uv: 3000, pv: 1398, amt: 2210},
-//   {name: 'aug', uv: 2000, pv: 9800, amt: 2290}
-// ]
-
 class MainTab extends React.Component {
   // componentDidMount() {
-  // const assetType = 'Gas';
-  // const amount = 0.01;
-  // doSendAsset('TestNet', toAddress, fromWif, assetType, amount)
-  // .then((response) => {
-  //   console.log("RS", response);
-  //   if (response.result === undefined){
-  //     console.log("Transaction failed!");
-  //   } else {
-  //     console.log("Transaction complete! Your balance will automatically update when the blockchain has processed it.")
-  //   }
-  // }).catch((e) => {
-  //   console.log("Transaction failed!");
-  // });
+
   // }
 
   constructor (props) {
@@ -55,7 +37,7 @@ class MainTab extends React.Component {
   }
 
   componentDidMount () {
-    this.refresh()
+    // this.refresh()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -67,19 +49,15 @@ class MainTab extends React.Component {
   componentDidUpdate () {
     // if we requested a claim and new claims are available, do claim
     if (this.props.claim.inProgress === true && this.props.claim.claimWasUpdated === true) {
-      // WE NEED TO HIT REFERESH TO TRIGGER THAT
-      console.info('Now we can do the actual claiming')
       this.props.dispatch(setClaimRequest(false))
 
       doClaimAllGas(this.props.net, this.props.account.wif).then((response) => {
-        console.info('doClaimAllGas')
         if (response.result === true) {
           this.props.dispatch(showToast('Claim was successful!'))
 
           setTimeout(() => this.props.dispatch(disableClaim(false)), 300000)
           setTimeout(() => this.refresh(), 5000)
         } else {
-          console.info('Claim failed')
           this.props.dispatch(showToast('Claim failed'))
         }
         setTimeout(() => this.refresh(), 5000)

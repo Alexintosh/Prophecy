@@ -6,14 +6,21 @@ import Loading from '../../components/Loading'
 import { CenteredCol } from '../../components/Balance'
 import TabContainer from '../Wallet/TabsContainer'
 import {login, hideError, publicLogin, getCachedPKeys} from './actions'
-import {disableClaim} from '../Wallet/actions'
 import PublicKeyList from '../../components/PublicKeyList'
+import {
+  disableClaim,
+  fetchTransaction,
+  fetchBalance,
+  fetchClaimAmount,
+  fetchMarketPrice
+} from '../Wallet/actions.js'
 
 class LoginPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      wif: ''
+      wif: '',
+      isLoading: false
     }
 
     this.hideAlertDialog = this.hideAlertDialog.bind(this)
@@ -25,12 +32,23 @@ class LoginPage extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.account.account) {
-      this.props.navigator.pushPage({
-        component: TabContainer,
-        props: {
-          key: 'wallet'
-        }
-      })
+      const net = this.props.net
+      const pkey = nextProps.account.account.address
+      this.props.dispatch(fetchMarketPrice())
+      this.props.dispatch(fetchTransaction(pkey, net))
+      this.props.dispatch(fetchBalance(pkey, net))
+      this.props.dispatch(fetchClaimAmount(pkey, net))
+
+      setTimeout(() => {
+        console.log('timeout')
+        this.setState({isLoading: false})
+        this.props.navigator.pushPage({
+          component: TabContainer,
+          props: {
+            key: 'walletPage'
+          }
+        })
+      }, 2000)
     }
   }
 
@@ -39,10 +57,12 @@ class LoginPage extends React.Component {
   }
 
   signin () {
+    this.setState({isLoading: true})
     this.props.dispatch(login(this.state.wif))
   }
 
   publicSignin (pkey) {
+    this.setState({isLoading: true})
     this.props.dispatch(publicLogin(pkey))
     this.props.dispatch(disableClaim(true))
   }
@@ -54,9 +74,11 @@ class LoginPage extends React.Component {
   render () {
     const { wif } = this.state
     const {alertDialogShown} = this.props.account
+    console.log('this.state.isLoading', this.state.isLoading)
 
     return (
-      <Page renderToolbar={() => <Toolbar title='Prophecy' />}>
+      <Page
+        renderToolbar={() => <Toolbar title='Prophecy' />}>
         <Row>
           <CenteredCol style={{ margin: '20px' }}>
             <h3>Prophecy</h3>
@@ -93,7 +115,6 @@ class LoginPage extends React.Component {
             </button>
           </div>
         </AlertDialog>
-
         <Loading isOpen={this.state.isLoading} />
       </Page>
     )

@@ -1,4 +1,4 @@
-import { getAccountsFromWIFKey } from 'neon-js'
+import { getAccountFromWIFKey } from 'neon-js'
 import LocalStorage from '../../utils/LocalStorage'
 import uniq from 'lodash/uniq'
 
@@ -76,9 +76,11 @@ function cachePkey (account) {
 }
 
 function doLogin (wif) {
+  console.log(wif, getAccountFromWIFKey(wif))
   let account
   try {
-    account = getAccountsFromWIFKey(wif)[0]
+    account = getAccountFromWIFKey(wif)
+    console.log('ACCOUNT', account)
   } catch (e) {
     account = -1
   }
