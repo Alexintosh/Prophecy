@@ -80,7 +80,7 @@ function doLogin (wif) {
   let account
   try {
     account = getAccountFromWIFKey(wif)
-    console.log("ACCOUNT", account)
+    console.log('ACCOUNT', account)
   } catch (e) {
     account = -1
   }

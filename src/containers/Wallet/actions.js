@@ -1,3 +1,4 @@
+import {notification} from 'onsenui'
 import {
   SET_BALANCE,
   SET_MARKET_PRICE,
@@ -8,7 +9,7 @@ import {
   DISABLE_CLAIM,
   ASSETS_LABELS,
   ASSETS
-} from "./constants"
+} from './constants'
 
 import {
   getTransactionHistory,
@@ -16,63 +17,63 @@ import {
   getBalance,
   verifyAddress,
   doSendAsset
-} from "neon-js"
+} from 'neon-js'
 
-import { getNEOPrice, getGASPrice } from "../../utils/CryptoCompareApi"
+import { getNEOPrice, getGASPrice } from '../../utils/CryptoCompareApi'
 
 import {
   showToast
 } from '../App/actions.js'
 
-export function setBalance(data) {
+export function setBalance (data) {
   return {
     type: SET_BALANCE,
     Neo: data.NEO,
     Gas: data.GAS
-  };
+  }
 }
 
-export function setMarketPrice(gasPrice, neoPrice) {
+export function setMarketPrice (gasPrice, neoPrice) {
   return {
     type: SET_MARKET_PRICE,
     gas: gasPrice,
     neo: neoPrice
-  };
+  }
 }
 
-export function setClaimAmount(amount) {
+export function setClaimAmount (amount) {
   return {
     type: SET_CLAIMABLE_AMOUNT,
     available: amount.available,
     unavailable: amount.unavailable
-  };
+  }
 }
 
-export function disableClaim(status) {
+export function disableClaim (status) {
   return {
     type: DISABLE_CLAIM,
     status
-  };
+  }
 }
 
-export function setClaimRequest(status) {
+export function setClaimRequest (status) {
   return {
     type: SET_CLAIM_REQUEST,
     status
-  };
+  }
 }
 
-export function resetPrice() {
+export function resetPrice () {
   return {
     type: RESET_PRICE
-  };
+  }
 }
 
-export function setTransactionHistory(transactions) {
+export function setTransactionHistory (transactions) {
   return {
     type: SET_TRANSACTION_HISTORY,
     transactions
-  };
+  }
 }
 
 export const validateTransactionBeforeSending = (
@@ -84,63 +85,63 @@ export const validateTransactionBeforeSending = (
 ) => {
   if (!sendAddress || !sendAmount) {
     return {
-      error: "Please specify an address and amount",
+      error: 'Please specify an address and amount',
       valid: false
-    };
+    }
   }
 
-  //TODO: ASSETS_LABELS
-  if (selectedAsset !== "NEO" && selectedAsset !== "GAS") {
+  // TODO: ASSETS_LABELS
+  if (selectedAsset !== 'NEO' && selectedAsset !== 'GAS') {
     return {
-      error: "That asset is not Neo or Gas",
+      error: 'That asset is not Neo or Gas',
       valid: false
-    };
+    }
   }
 
-  if (verifyAddress(sendAddress) !== true || sendAddress.charAt(0) !== "A") {
+  if (verifyAddress(sendAddress) !== true || sendAddress.charAt(0) !== 'A') {
     return {
-      error: "The address you entered was not valid.",
+      error: 'The address you entered was not valid.',
       valid: false
-    };
+    }
   }
 
   if (selectedAsset === ASSETS.NEO) {
     if (parseFloat(sendAmount) !== parseInt(sendAmount)) {
       // check for fractional neo
       return {
-        error: "You cannot send fractional amounts of Neo.",
+        error: 'You cannot send fractional amounts of Neo.',
         valid: false
-      };
+      }
     }
     if (parseInt(sendAmount) > neoBalance) {
       // check for value greater than account balance
       return {
-        error: "You do not have enough NEO to send.",
+        error: 'You do not have enough NEO to send.',
         valid: false
-      };
+      }
     }
   } else if (selectedAsset === ASSETS.GAS) {
     if (parseFloat(sendAmount) > gasBalance) {
       return {
-        error: "You do not have enough GAS to send.",
+        error: 'You do not have enough GAS to send.',
         valid: false
-      };
+      }
     }
   }
 
   if (parseFloat(sendAmount) < 0) {
     // check for negative asset
     return {
-      error: "You cannot send negative amounts of an asset.",
+      error: 'You cannot send negative amounts of an asset.',
       valid: false
-    };
+    }
   }
 
   return {
-    error: "",
+    error: '',
     valid: true
-  };
-};
+  }
+}
 
 export const sendTransaction = (sendAddress, sendAmount, asset = 'GAS') => {
   return (dispatch, getState) => {
@@ -172,29 +173,25 @@ export const sendTransaction = (sendAddress, sendAmount, asset = 'GAS') => {
         let sendAsset = {}
         sendAsset[assetName] = sendAmount
 
-        dispatch(showToast("Processing..."))
-
-        // console.log(`
-        //   NET: ${net},
-        //   sendAddress: ${sendAddress},
-        //   wif: ${wif},
-        //   sendAsset: ${sendAsset},
-        // `)
-
         const sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
 
-        sendAssetFn()
-          .then(response => {
-            if (response.result === undefined || response.result === false) {
-              rejectTransaction("Transaction failed!")
-            } else {
-              dispatch(showToast("Transaction complete! Your balance will automatically update when the blockchain has processed it."))
-            }
-            resolve()
-          })
-          .catch(e => {
-            rejectTransaction("Transaction failed!")
-          })
+        notification.confirm(`Do you want to send <b>${sendAmount} ${assetName}</b> <br/> to ${sendAddress} ?`).then((response) => {
+          if (response === 1) {
+            dispatch(showToast('Processing...'))
+            sendAssetFn()
+            .then(response => {
+              if (response.result === undefined || response.result === false) {
+                rejectTransaction('Transaction failed!')
+              } else {
+                dispatch(showToast('Transaction complete! Your balance will automatically update when the blockchain has processed it.'))
+              }
+              resolve()
+            })
+            .catch(e => {
+              rejectTransaction('Transaction failed!')
+            })
+          }
+        })
       } else {
         rejectTransaction(error)
       }
@@ -202,57 +199,57 @@ export const sendTransaction = (sendAddress, sendAmount, asset = 'GAS') => {
   }
 }
 
-export function fetchTransaction(pkey, net) {
+export function fetchTransaction (pkey, net) {
   return dispatch =>
     getTransactionHistory(net, pkey)
       .then(b => {
         return b.map(t => {
           return {
-            type: t.neo_sent ? "NEO" : "GAS",
+            type: t.neo_sent ? 'NEO' : 'GAS',
             amount: t.neo_sent ? t.NEO : t.GAS,
             txid: t.txid,
             block_index: t.block_index
-          };
-        });
+          }
+        })
       })
       .then(data => {
-        dispatch(setTransactionHistory(data));
-      });
+        dispatch(setTransactionHistory(data))
+      })
 }
 
-export function fetchMarketPrice() {
+export function fetchMarketPrice () {
   return dispatch =>
     Promise.all([getGASPrice(), getNEOPrice()]).then(data => {
-      dispatch(setMarketPrice(data[0], data[1]));
-    });
+      dispatch(setMarketPrice(data[0], data[1]))
+    })
 }
 
-export function fetchBalance(pkey, net = "TestNet") {
+export function fetchBalance (pkey, net = 'TestNet') {
   return dispatch =>
     getBalance(net, pkey).then(data => {
-      console.log("DATA", data);
-      dispatch(setBalance(data));
-    });
+      console.log('DATA', data)
+      dispatch(setBalance(data))
+    })
 }
 
-export function fetchClaimAmount(pkey, net = "TestNet") {
+export function fetchClaimAmount (pkey, net = 'TestNet') {
   return dispatch =>
     getClaimAmounts(net, pkey).then(data => {
-      dispatch(setClaimAmount(data));
-    });
+      dispatch(setClaimAmount(data))
+    })
 }
 
-export function doGasClaim(net = "TestNet", wif, selfAddress, neo) {
-  console.info("Sending Neo to Yourself...");
+export function doGasClaim (net = 'TestNet', wif, selfAddress, neo) {
+  console.info('Sending Neo to Yourself...')
   return dispatch =>
-    doSendAsset(net, selfAddress, wif, "Neo", neo).then(response => {
+    doSendAsset(net, selfAddress, wif, 'Neo', neo).then(response => {
       if (response.result === undefined) {
-        console.info("Transaction failed!");
+        console.info('Transaction failed!')
       } else {
-        console.info("Waiting for transaction to clear...");
-        dispatch(setClaimRequest(true));
-        dispatch(disableClaim(true));
-        dispatch(fetchClaimAmount(selfAddress));
+        console.info('Waiting for transaction to clear...')
+        dispatch(setClaimRequest(true))
+        dispatch(disableClaim(true))
+        dispatch(fetchClaimAmount(selfAddress))
       }
-    });
+    })
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import {notification} from 'onsenui'
 import { Page, Col, Row, Icon, Button, Carousel, CarouselItem, Input } from 'react-onsenui'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
@@ -81,7 +82,6 @@ class SendTab extends React.Component {
   }
 
   addressChanged (e) {
-    console.log(e.target.value);
     this.setState({
       ...this.state,
       transaction: {
@@ -243,7 +243,7 @@ class SendTab extends React.Component {
               modifier='material'
               float
               />
-            </Row>
+          </Row>
           <Row>
             <Row>
               <Num onClick={() => this.numberPressed(1)}>1</Num>

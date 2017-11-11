@@ -13,17 +13,19 @@
 <img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot4.png?raw=true" alt="Ockham logo">
 <img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot1.png?raw=true" alt="Ockham logo">
 <img src="https://github.com/Alexintosh/Prophecy/blob/feature/SendAsset/screenshots/ScreenShot3.png?raw=true" alt="Ockham logo">
-## <a name="features"></a>Features
+## <a name="features"></a>Features v1
 
 - [X] Transaction History
-- [X] Charts
 - [X] Claim Gas
 - [X] Switch Net
 - [X] Send NEO
 - [X] Send GAS
+
+## <a name="features"></a>Roadmap v2
 - [ ] QRcode
 - [ ] Fingerprint
 - [ ] Create New Wallet
+- [ ] Pin based authentification
 
 #### Dev Features
 * Webpack setup including dev server and build process
