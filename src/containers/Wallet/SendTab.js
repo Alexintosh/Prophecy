@@ -290,6 +290,7 @@ const mapStateToProps = (state) => ({
   wallet: state.wallet,
   price: state.wallet.price,
   public_key: state.account.account.address
+  // TODO check state transaction and reset values.
 })
 
 export default connect(mapStateToProps)(SendTab)
